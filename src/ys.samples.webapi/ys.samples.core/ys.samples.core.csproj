@@ -64,6 +64,8 @@
     <Compile Include="services\IDomainValidator.cs" />
     <Compile Include="services\IDomainServiceRequestContext.cs" />
     <Compile Include="Paging.cs" />
+    <Compile Include="web\HateoasModel.cs" />
+    <Compile Include="web\IHateoasAdapter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

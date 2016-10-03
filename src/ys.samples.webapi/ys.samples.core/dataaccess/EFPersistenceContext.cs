@@ -46,6 +46,7 @@ namespace ys.samples.dataaccess {
             }
         }
         private DbContext _EFContext;
+        private UnitOfWork _currentUoW;
         public EFPersistenceContext( DbContext efctx ) {
             _EFContext = efctx;
         }
@@ -53,10 +54,25 @@ namespace ys.samples.dataaccess {
             _EFContext.Dispose();
         }
 
-        public IUnitOfWork StartWork( ) {
-            return new UnitOfWork() {
-                transaction = _EFContext.Database.BeginTransaction(),
-            };
+        public IUnitOfWork StartWork( bool joinExistingWork ) {
+            if ( joinExistingWork ) {
+                if ( _currentUoW == null || _currentUoW.disposed ) {
+                    _currentUoW = new UnitOfWork() {
+                        context = _EFContext,
+                        transaction = _EFContext.Database.BeginTransaction(),
+                    };
+                }
+                return _currentUoW;
+            } else {
+                var uow = new UnitOfWork() {
+                    context = _EFContext,
+                    transaction = _EFContext.Database.BeginTransaction(),
+                };
+                if ( _currentUoW == null || _currentUoW.disposed ) {
+                    _currentUoW = uow;
+                }
+                return uow;
+            }
         }
     }
 }

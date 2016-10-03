@@ -50,7 +50,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppTable.cs" />
+    <Compile Include="entities\Group.cs" />
+    <Compile Include="entities\GroupMembership.cs" />
     <Compile Include="entities\User.cs" />
+    <Compile Include="entities\UserLogin.cs" />
+    <Compile Include="entities\UserSession.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

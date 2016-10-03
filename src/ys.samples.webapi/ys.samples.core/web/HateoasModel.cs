@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ys.samples.services {
-    public interface IDomainModel {
-        long Id {
-            get;
+namespace ys.samples.web {
+    public class HateoasModel {
+        public class Links {
         }
+        public class Data {
+        }
+
     }
 }

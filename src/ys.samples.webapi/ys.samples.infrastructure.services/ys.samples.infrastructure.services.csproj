@@ -7,7 +7,7 @@
     <ProjectGuid>{4D083062-1990-4CE4-AFBE-3E450115FB6D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ys.samples.infrastructure.services</RootNamespace>
+    <RootNamespace>ys.samples.infrastructure</RootNamespace>
     <AssemblyName>ys.samples.infrastructure.services</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -40,14 +40,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IUserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserModel.cs" />
+    <Compile Include="UserModelAdapter.cs" />
+    <Compile Include="UserService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ys.samples.core\ys.samples.core.csproj">
       <Project>{9b6810d5-db64-4b3d-838d-a308540e48db}</Project>
       <Name>ys.samples.core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ys.samples.infrastructure.dataaccess\ys.samples.infrastructure.dataaccess.csproj">
+      <Project>{C5AF6553-9610-48CD-9571-DD23757E93AB}</Project>
+      <Name>ys.samples.infrastructure.dataaccess</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

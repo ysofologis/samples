@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ys.samples.services;
 
-namespace ys.samples.infrastructure.services {
-    public class UserModel {
-        public int Id {
+namespace ys.samples.infrastructure {
+    public class UserModel : IDomainModel {
+        public long Id {
             get;set;
         }
         public string FirstName {

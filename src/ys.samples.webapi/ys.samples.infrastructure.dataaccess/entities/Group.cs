@@ -7,20 +7,15 @@ using System.Threading.Tasks;
 using ys.samples.dataaccess;
 
 namespace ys.samples.infrastructure.entities {
-    [AppTable("users")]
-    public class User : IPersistentEntity {
+    [AppTable("groups")]
+    public class Group : IPersistentEntity {
         public long Id {
-            get;
-            set;
-        }
-        public string FirstName {
             get;set;
         }
-        public string LastName {
-            get; set;
-        }
-        public string Email {
-            get; set;
+        [Index(IsUnique=true)]
+        public string Name {
+            get;
+            set;
         }
     }
 }

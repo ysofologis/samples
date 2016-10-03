@@ -6,6 +6,6 @@ using System.Threading.Tasks;
 
 namespace ys.samples.dataaccess {
     public interface IPersistenceContext : IDisposable {
-        IUnitOfWork StartWork( );
+        IUnitOfWork StartWork( bool joinExistingWork );
     }
 }

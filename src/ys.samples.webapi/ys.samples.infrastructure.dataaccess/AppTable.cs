@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ys.samples.devunion {
+namespace ys.samples.infrastructure {
     internal class AppTable : TableAttribute {
         public const string DOMAIN_PREFIX = "webapp_";
         public AppTable(string tableName): base( DOMAIN_PREFIX + tableName) {

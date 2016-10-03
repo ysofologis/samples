@@ -10,4 +10,18 @@ namespace ys.samples.services {
         IDomainModel ModelFromEntity( IPersistentEntity entity );
         IPersistentEntity EntityFromModel( IDomainModel model );
     }
+
+    public abstract class ModelAdapter<ModelT, EntityT> : IDomainModelAdapter
+        where ModelT : IDomainModel
+        where EntityT : class, IPersistentEntity, new() {
+        public abstract EntityT EntityFromModel( ModelT model );
+        IPersistentEntity IDomainModelAdapter.EntityFromModel( IDomainModel model ) {
+            return this.EntityFromModel( (ModelT) model);
+        }
+
+        public abstract ModelT ModelFromEntity( EntityT entity );
+        IDomainModel IDomainModelAdapter.ModelFromEntity( IPersistentEntity entity ) {
+            return this.ModelFromEntity((EntityT)entity);
+        }
+    }
 }
