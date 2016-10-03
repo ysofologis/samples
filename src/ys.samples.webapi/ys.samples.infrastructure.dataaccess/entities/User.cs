@@ -8,10 +8,10 @@ using ys.samples.dataaccess;
 
 namespace ys.samples.infrastructure.entities {
     [AppTable("users")]
-    public class User : IPersistentEntity {
-        public long Id {
-            get;
-            set;
+    public class User : PersistentEntity {
+        [Index("IX_NAME", IsUnique =true)]
+        public string Name {
+            get; set;
         }
         public string FirstName {
             get;set;

@@ -74,5 +74,9 @@ namespace ys.samples.dataaccess {
                 return uow;
             }
         }
+
+        public object GetUnderlyingSession( ) {
+            return _EFContext;
+        }
     }
 }

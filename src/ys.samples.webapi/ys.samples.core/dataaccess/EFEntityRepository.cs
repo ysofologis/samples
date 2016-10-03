@@ -12,7 +12,8 @@ namespace ys.samples.dataaccess {
         where EntityT : class, IPersistentEntity {
         private DbSet<EntityT> _entitySet;
         private Action<EntityT> _setModifiled;
-        public EFEntityRepository( DbContext ef ) {
+        public EFEntityRepository( IPersistenceContext persistentContext ) {
+            var ef = persistentContext.GetUnderlyingSession() as DbContext;
             _entitySet = ef.Set<EntityT>();
             _setModifiled = ( e ) => {
                 ef.Entry(e).State = EntityState.Modified;
@@ -37,10 +38,10 @@ namespace ys.samples.dataaccess {
         IQueryable<IPersistentEntity> IEntityRepository.GetAll( Paging paging ) {
             return this.GetAll(paging);
         }
-        public EntityT GetById( long id ) {
+        public EntityT GetById( string id ) {
             return _entitySet.Find(id);
         }
-        IPersistentEntity IEntityRepository.GetById( long id ) {
+        IPersistentEntity IEntityRepository.GetById( string id ) {
             return this.GetById(id);
         }
 

@@ -7,10 +7,7 @@ using ys.samples.dataaccess;
 
 namespace ys.samples.infrastructure.entities {
     [AppTable("userlogins")]
-    public class UserLogin : IPersistentEntity {
-        public long Id {
-            get;set;
-        }
+    public class UserLogin : PersistentEntity {
         public string Password {
             get;set;
         }

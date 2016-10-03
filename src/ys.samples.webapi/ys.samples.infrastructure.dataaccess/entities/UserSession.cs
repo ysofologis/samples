@@ -7,11 +7,7 @@ using ys.samples.dataaccess;
 
 namespace ys.samples.infrastructure.entities {
     [AppTable("usersessions")]
-    public class UserSession : IPersistentEntity {
-        public long Id {
-            get;
-            set;
-        }
+    public class UserSession : PersistentEntity {
         public DateTime LoginDate {
             get;
             set;

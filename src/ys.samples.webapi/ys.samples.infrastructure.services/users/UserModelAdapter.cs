@@ -7,8 +7,8 @@ using ys.samples.dataaccess;
 using ys.samples.infrastructure.entities;
 using ys.samples.services;
 
-namespace ys.samples.infrastructure {
-    public class UserModelAdapter : ModelAdapter<UserModel,User> {
+namespace ys.samples.infrastructure.users {
+    internal class UserModelAdapter : ModelAdapter<UserModel,User> {
         public override User EntityFromModel( UserModel model ) {
             return new User() {
                 Id = model.Id,

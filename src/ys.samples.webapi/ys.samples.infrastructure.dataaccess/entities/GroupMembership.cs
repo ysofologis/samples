@@ -7,11 +7,11 @@ using ys.samples.dataaccess;
 
 namespace ys.samples.infrastructure.entities {
     [AppTable("usergroups")]
-    public class GroupMembership : IPersistentEntity {
-        public long Id {
-            get;set;
+    public class GroupMembership : PersistentEntity {
+        public long? userId {
+            get;
+            set;
         }
-        public long? userId;
         public virtual User user {
             get;
             set;

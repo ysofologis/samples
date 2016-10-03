@@ -14,11 +14,26 @@ namespace ys.samples.services {
                                                 Filtering filtering, 
                                                 Paging paging );
         IDomainModel GetById( IDomainServiceRequestContext reqctx, 
-                                                long modelId );
+                                                string modelId );
         void Update( IDomainServiceRequestContext reqctx, 
-                                                long id, 
+                                                string id, 
                                                 IDomainModel updatedModel );
         void Delete( IDomainServiceRequestContext reqctx, 
-                                                long id );
+                                                string id );
+    }
+    public interface IDomainService<ModelT> : IDomainService
+        where ModelT: IDomainModel {
+        void Add( IDomainServiceRequestContext reqctx, ModelT model );
+        void AddBatch( IDomainServiceRequestContext reqctx, IEnumerable<ModelT> models );
+        new IQueryable<ModelT> GetAll( IDomainServiceRequestContext reqctx,
+                                                Paging paging );
+        new IQueryable<ModelT> GetByFilter( IDomainServiceRequestContext reqctx,
+                                                Filtering filtering,
+                                                Paging paging );
+        new ModelT GetById( IDomainServiceRequestContext reqctx,
+                                                string modelId );
+        void Update( IDomainServiceRequestContext reqctx,
+                                                string id,
+                                                ModelT updatedModel );
     }
 }

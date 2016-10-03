@@ -7,7 +7,7 @@ using ys.samples.services;
 
 namespace ys.samples.infrastructure {
     public class UserModel : IDomainModel {
-        public long Id {
+        public string Id {
             get;set;
         }
         public string FirstName {

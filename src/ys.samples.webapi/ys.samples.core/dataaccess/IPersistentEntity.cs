@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace ys.samples.dataaccess {
     public interface IPersistentEntity {
-        long Id {
+        string Id {
             get;
         }
+        void MakeUnique( );
     }
 }

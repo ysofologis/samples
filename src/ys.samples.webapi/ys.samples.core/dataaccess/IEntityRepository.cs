@@ -11,7 +11,7 @@ namespace ys.samples.dataaccess {
     public interface IEntityRepository {
         IPersistentEntity Insert( IPersistentEntity entity );
         IPersistentEntity InsertMany( IEnumerable<IPersistentEntity> entity );
-        IPersistentEntity GetById( long id );
+        IPersistentEntity GetById( string id );
         IQueryable<IPersistentEntity> GetAll( Paging paging );
         IQueryable<IPersistentEntity> GetByFilter( Filtering filter, Paging paging );
         void Update( IPersistentEntity entity );

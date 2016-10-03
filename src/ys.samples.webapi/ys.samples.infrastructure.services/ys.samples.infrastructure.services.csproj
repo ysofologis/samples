@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=4.1.1.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.4.1.1\lib\net45\Autofac.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -40,10 +44,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IUserService.cs" />
+    <Compile Include="Module.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserModel.cs" />
-    <Compile Include="UserModelAdapter.cs" />
-    <Compile Include="UserService.cs" />
+    <Compile Include="users\UserModelAdapter.cs" />
+    <Compile Include="users\UserRepository.cs" />
+    <Compile Include="users\UserService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ys.samples.core\ys.samples.core.csproj">
@@ -54,6 +61,9 @@
       <Project>{C5AF6553-9610-48CD-9571-DD23757E93AB}</Project>
       <Name>ys.samples.infrastructure.dataaccess</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
