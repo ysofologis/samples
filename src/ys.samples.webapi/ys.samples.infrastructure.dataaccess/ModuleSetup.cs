@@ -7,6 +7,7 @@ using Autofac;
 using ys.samples.ioc;
 using ys.samples.infrastructure.persistance;
 using ys.samples.dataaccess;
+using System.Data.Entity;
 
 namespace ys.samples.infrastructure {
     internal class ModuleSetup : IModuleSetup {
@@ -16,6 +17,7 @@ namespace ys.samples.infrastructure {
         private const string USER_ADMIN_PWD = "admin";
 
         public void setupModule( IContainer iocResolver ) {
+
             using ( var perctx = iocResolver.Resolve<InfraPersistenceContext>() ) {
                 var dbctx = perctx.GetUnderlyingSession() as InfraDBContext;
                 addDefaultGroups(dbctx);

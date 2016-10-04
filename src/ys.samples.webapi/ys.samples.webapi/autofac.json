@@ -1,0 +1,10 @@
+﻿{
+  "modules": [{
+      "type": "ys.samples.infrastructure.Module, ys.samples.infrastructure.dataaccess"
+    }, {
+      "type": "ys.samples.infrastructure.Module, ys.samples.infrastructure.services"
+    }, {
+      "type": "ys.samples.infrastructure.Module, ys.samples.infrastructure.services"
+    }
+  ]
+}
