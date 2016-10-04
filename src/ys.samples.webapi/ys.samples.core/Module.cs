@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Autofac;
-using Autofac.Integration.WebApi;
+using ys.samples.web;
 
-namespace ys.samples.infrastructure {
-    internal class Module : Autofac.Module {
+namespace ys.samples {
+    public class Module : Autofac.Module {
         protected override void Load( ContainerBuilder builder ) {
             base.Load(builder);
-            builder.RegisterApiControllers(ThisAssembly).PropertiesAutowired();
+            builder.RegisterType<DefaultHateoasDecorator>().As<IHateoasDecorator>().InstancePerDependency();
         }
     }
 }

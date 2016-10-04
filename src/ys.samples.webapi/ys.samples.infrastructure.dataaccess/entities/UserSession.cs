@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,7 +21,8 @@ namespace ys.samples.infrastructure.entities {
             get;
             set;
         }
-        public long? userLoginId {
+        [Column("user_login_id")]
+        public long userLoginId {
             get;
             set;
         }

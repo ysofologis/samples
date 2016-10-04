@@ -32,10 +32,10 @@ namespace ys.samples.web {
             }
         }
         public IEnumerable<ResourceLink> links {
-            get; private set;
+            get; set;
         }
         public IEnumerable<ResourceItem> content {
-            get;private set;
+            get;set;
         }
     }
 }

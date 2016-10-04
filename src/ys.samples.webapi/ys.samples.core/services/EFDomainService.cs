@@ -59,8 +59,12 @@ namespace ys.samples.services {
             throw new NotImplementedException();
         }
 
+        public IQueryable<ModelT> GetAll( IDomainServiceRequestContext reqctx, Paging paging ) {
+            var data = _entityRepo.GetAll(paging).ToList();
+            return data.Select(x => _adapter.ModelFromEntity(x)).AsQueryable();
+        }
         IQueryable<ModelT> IDomainService<ModelT>.GetAll( IDomainServiceRequestContext reqctx, Paging paging ) {
-            throw new NotImplementedException();
+            return this.GetAll(reqctx, paging);
         }
 
         IQueryable<ModelT> IDomainService<ModelT>.GetByFilter( IDomainServiceRequestContext reqctx, Filtering filtering, Paging paging ) {

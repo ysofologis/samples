@@ -8,7 +8,10 @@ using System.Web.Http;
 using ys.samples.web;
 
 namespace ys.samples.infrastructure.web {
+    [RoutePrefix("api/users")]
     public class UsersController : ApiController {
+        public UsersController( ) {
+        }
         public IUserService domainService {
             get;
             set;
@@ -16,6 +19,15 @@ namespace ys.samples.infrastructure.web {
         public IHateoasDecorator hateoasDecorator {
             get;
             set;
+        }
+        [HttpGet]
+        [Route("")]
+        public HttpResponseMessage GetAll( int? page = null, int? pageSize = null ) {
+            var reqctx = new WebAPIDomainServiceRequestContext(this.RequestContext);
+            var paging = new Paging() { page = page, pageSize = pageSize };
+            var items = this.domainService.GetAll(reqctx, paging);
+            var hateoasModel = this.hateoasDecorator.DecorateModel(items, paging);
+            return this.Request.CreateResponse(System.Net.HttpStatusCode.OK, hateoasModel);
         }
         [HttpGet]
         [Route("{id}")]

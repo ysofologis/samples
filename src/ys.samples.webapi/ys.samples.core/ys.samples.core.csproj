@@ -100,6 +100,7 @@
     <Compile Include="dataaccess\IUnitOfWork.cs" />
     <Compile Include="dataaccess\PersistentEntity.cs" />
     <Compile Include="ioc\IModuleSetup.cs" />
+    <Compile Include="Module.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Filtering.cs" />
     <Compile Include="services\EFDomainService.cs" />
@@ -110,6 +111,7 @@
     <Compile Include="services\IDomainValidator.cs" />
     <Compile Include="services\IDomainServiceRequestContext.cs" />
     <Compile Include="Paging.cs" />
+    <Compile Include="web\DefaultHateoasDecorator.cs" />
     <Compile Include="web\HateoasModel.cs" />
     <Compile Include="web\IHateoasDecorator.cs" />
     <Compile Include="web\WebAPIDomainServiceRequestContext.cs" />

@@ -10,10 +10,10 @@ using System.Threading.Tasks;
 
 namespace ys.samples.dataaccess {
     public abstract class PersistentEntity : IPersistentEntity {
-        public const int KEY_SIZE = 16;
+        public const int KEY_SIZE = 27;
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        [StringLength(maximumLength: KEY_SIZE, MinimumLength = KEY_SIZE)]
+        [StringLength(KEY_SIZE)]
         public string Id {
             get;
             set;

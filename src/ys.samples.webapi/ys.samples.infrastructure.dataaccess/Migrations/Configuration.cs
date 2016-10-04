@@ -1,8 +1,10 @@
 namespace ys.samples.infrastructure.Migrations
 {
+    using SQLite.CodeFirst;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
+    using System.Data.Entity.SqlServerCompact;
     using System.Linq;
 
     internal sealed class Configuration : DbMigrationsConfiguration<ys.samples.infrastructure.persistance.InfraDBContext>
@@ -12,7 +14,7 @@ namespace ys.samples.infrastructure.Migrations
             this.AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(ys.samples.infrastructure.persistance.InfraDBContext context)
+        protected override void Seed(persistance.InfraDBContext context)
         {
             //  This method will be called after migrating to the latest version.
 

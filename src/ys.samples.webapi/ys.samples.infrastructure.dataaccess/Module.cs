@@ -12,7 +12,7 @@ namespace ys.samples.infrastructure {
         protected override void Load( ContainerBuilder builder ) {
             base.Load(builder);
             builder.RegisterType<InfraDBContext>().InstancePerLifetimeScope();
-            builder.RegisterType<InfraPersistenceContext>().InstancePerLifetimeScope();
+            builder.Register( c => new InfraPersistenceContext( c.Resolve<InfraDBContext>() ) ).InstancePerDependency();
             builder.RegisterType<ModuleSetup>().As<IModuleSetup>().SingleInstance();
         }
     }

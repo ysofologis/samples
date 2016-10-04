@@ -20,8 +20,29 @@ namespace ys.samples.infrastructure {
 
             using ( var perctx = iocResolver.Resolve<InfraPersistenceContext>() ) {
                 var dbctx = perctx.GetUnderlyingSession() as InfraDBContext;
+                if ( dbctx.isSQLite ) {
+                    prepareSchemaForSQLite(dbctx);
+                }
                 addDefaultGroups(dbctx);
                 addAdminUsers(dbctx);
+            }
+        }
+
+        private void prepareSchemaForSQLite( InfraDBContext dbctx ) {
+            Func<Exception,Exception> findException = ( e ) => {
+                var finalEx = e;
+                while ( finalEx.InnerException != null ) {
+                    finalEx = finalEx.InnerException;
+                }
+                return finalEx;
+            };
+            try {
+                dbctx.Users.Count();
+            }catch(Exception e) {
+                var x = findException(e);
+                if ( x.Source.Equals("System.Data.SQLite", StringComparison.CurrentCultureIgnoreCase) ) {
+                    dbctx.createSchemaForSqlite();
+                }
             }
         }
         private void addDefaultGroups( InfraDBContext dbctx ) {
@@ -30,6 +51,7 @@ namespace ys.samples.infrastructure {
                 var group = new entities.Group() {
                     Name = GROUP_USERS,
                     dateInserted = DateTime.Now,
+                    dateUpdated = DateTime.Now,
                 };
                 dbctx.Groups.Add(group.makeUnique());
                 hasChanges = true;
@@ -38,6 +60,7 @@ namespace ys.samples.infrastructure {
                 var group = new entities.Group() {
                     Name = GROUP_ADMINS,
                     dateInserted = DateTime.Now,
+                    dateUpdated = DateTime.Now,
                 };
                 dbctx.Groups.Add(group.makeUnique());
                 hasChanges = true;
@@ -54,12 +77,14 @@ namespace ys.samples.infrastructure {
                     LastName = "Administrator",
                     Email = "admin@example.com",
                     dateInserted = DateTime.Now,
+                    dateUpdated = DateTime.Now,
                 };
                 dbctx.Users.Add(adminUser.makeUnique());
                 var login = new entities.UserLogin() {
                     user = adminUser,
-                    Password = USER_ADMIN_PWD,
+                    userPassword = USER_ADMIN_PWD,
                     dateInserted = DateTime.Now,
+                    dateUpdated = DateTime.Now,
                 };
                 dbctx.UserLogins.Add(login.makeUnique());
 
@@ -68,6 +93,7 @@ namespace ys.samples.infrastructure {
                     user = adminUser,
                     group = adminGroup,
                     dateInserted = DateTime.Now,
+                    dateUpdated = DateTime.Now,
                 };
                 dbctx.UserGroups.Add(membership.makeUnique());
 

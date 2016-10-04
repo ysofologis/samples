@@ -33,7 +33,8 @@ namespace ys.samples.webapi {
 
             var config = new ConfigurationBuilder();
             config.AddJsonFile("autofac.json");
-            var module = new ConfigurationModule(config.Build());
+            var module = new ConfigurationModule(config.Build());
+
             builder.RegisterModule(module);
 
             var container = builder.Build();

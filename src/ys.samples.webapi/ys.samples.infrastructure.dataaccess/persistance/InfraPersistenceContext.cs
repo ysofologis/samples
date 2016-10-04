@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 using ys.samples.dataaccess;
 
 namespace ys.samples.infrastructure.persistance {
-    internal class InfraPersistenceContext : EFPersistenceContext {
-        public InfraPersistenceContext( InfraDBContext dbContext) : base(dbContext) {
+    public sealed class InfraPersistenceContext : EFPersistenceContext {
+        internal InfraPersistenceContext( InfraDBContext dbContext) : base(dbContext) {
 
         }
     }
