@@ -7,8 +7,13 @@ using System.Threading.Tasks;
 namespace ys.samples.dataaccess {
     public interface IPersistentEntity {
         string Id {
-            get;
+            get;set;
         }
-        void MakeUnique( );
+        DateTime? dateInserted {
+            get;set;
+        }
+        DateTime? dateUpdated {
+            get; set;
+        }
     }
 }

@@ -47,6 +47,7 @@ namespace ys.samples.dataaccess {
 
         public void Update( EntityT entity ) {
             _entitySet.Attach(entity);
+            entity.dateUpdated = DateTime.Now;
             _setModifiled(entity);
         }
         void IEntityRepository.Update( IPersistentEntity entity ) {
@@ -146,14 +147,23 @@ namespace ys.samples.dataaccess {
         }
 
         public EntityT Insert( EntityT entity ) {
+            entity.makeUnique();
+            entity.dateInserted = DateTime.Now;
             return _entitySet.Add(entity);
         }
+        public IEnumerable<EntityT> InsertMany( IEnumerable<EntityT> entities ) {
+            foreach ( var e in entities ) {
+                e.dateInserted = DateTime.Now;
+                e.makeUnique();
+            }
+            return _entitySet.AddRange(entities);
+        }
         IPersistentEntity IEntityRepository.Insert( IPersistentEntity entity ) {
-            throw new NotImplementedException();
+            return this.Insert( (EntityT) entity);
         }
 
-        IPersistentEntity IEntityRepository.InsertMany( IEnumerable<IPersistentEntity> entity ) {
-            throw new NotImplementedException();
+        IEnumerable<IPersistentEntity> IEntityRepository.InsertMany( IEnumerable<IPersistentEntity> entities ) {
+            return this.InsertMany(entities.Cast<EntityT>());
         }
     }
 }

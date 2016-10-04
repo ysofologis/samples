@@ -67,6 +67,7 @@
   <ItemGroup>
     <Compile Include="dataaccess\EFEntityRepository.cs" />
     <Compile Include="dataaccess\EFPersistenceContext.cs" />
+    <Compile Include="dataaccess\EntityHelper.cs" />
     <Compile Include="dataaccess\IEntityRepository.cs" />
     <Compile Include="dataaccess\IPersistenceContext.cs" />
     <Compile Include="dataaccess\IPersistentEntity.cs" />

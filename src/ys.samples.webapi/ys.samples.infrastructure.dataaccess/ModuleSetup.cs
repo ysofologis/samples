@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Autofac;
 using ys.samples.ioc;
 using ys.samples.infrastructure.persistance;
+using ys.samples.dataaccess;
 
 namespace ys.samples.infrastructure {
     internal class ModuleSetup : IModuleSetup {
@@ -18,7 +19,7 @@ namespace ys.samples.infrastructure {
             using ( var perctx = iocResolver.Resolve<InfraPersistenceContext>() ) {
                 var dbctx = perctx.GetUnderlyingSession() as InfraDBContext;
                 addDefaultGroups(dbctx);
-                addDefaultUsers(dbctx);
+                addAdminUsers(dbctx);
             }
         }
         private void addDefaultGroups( InfraDBContext dbctx ) {
@@ -26,47 +27,47 @@ namespace ys.samples.infrastructure {
             if ( ! dbctx.Groups.Any(x => x.Name == GROUP_USERS) ) {
                 var group = new entities.Group() {
                     Name = GROUP_USERS,
+                    dateInserted = DateTime.Now,
                 };
-                group.MakeUnique();
-                dbctx.Groups.Add(group);
+                dbctx.Groups.Add(group.makeUnique());
                 hasChanges = true;
             }
             if ( !dbctx.Groups.Any(x => x.Name == GROUP_ADMINS) ) {
                 var group = new entities.Group() {
                     Name = GROUP_ADMINS,
+                    dateInserted = DateTime.Now,
                 };
-                group.MakeUnique();
-                dbctx.Groups.Add(group);
+                dbctx.Groups.Add(group.makeUnique());
                 hasChanges = true;
             }
             if ( hasChanges ) {
                 dbctx.SaveChanges();
             }
         }
-        private void addDefaultUsers( InfraDBContext dbctx ) {
+        private void addAdminUsers( InfraDBContext dbctx ) {
             if ( !dbctx.Users.Any(x => x.Name == USER_ADMIN) ) {
                 var adminUser = new entities.User() {
                     Name = USER_ADMIN,
                     FirstName = "System",
                     LastName = "Administrator",
-                    Email = "admin@example.com"
+                    Email = "admin@example.com",
+                    dateInserted = DateTime.Now,
                 };
-                adminUser.MakeUnique();
-                dbctx.Users.Add(adminUser);
+                dbctx.Users.Add(adminUser.makeUnique());
                 var login = new entities.UserLogin() {
                     user = adminUser,
                     Password = USER_ADMIN_PWD,
+                    dateInserted = DateTime.Now,
                 };
-                login.MakeUnique();
-                dbctx.UserLogins.Add(login);
+                dbctx.UserLogins.Add(login.makeUnique());
 
                 var adminGroup = dbctx.Groups.Where(x => x.Name == GROUP_ADMINS).Single();
                 var membership = new entities.GroupMembership() {
                     user = adminUser,
                     group = adminGroup,
+                    dateInserted = DateTime.Now,
                 };
-                membership.MakeUnique();
-                dbctx.UserGroups.Add(membership);
+                dbctx.UserGroups.Add(membership.makeUnique());
 
                 dbctx.SaveChanges();
             }

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace ys.samples.dataaccess {
     public interface IEntityRepository {
         IPersistentEntity Insert( IPersistentEntity entity );
-        IPersistentEntity InsertMany( IEnumerable<IPersistentEntity> entity );
+        IEnumerable<IPersistentEntity> InsertMany( IEnumerable<IPersistentEntity> entity );
         IPersistentEntity GetById( string id );
         IQueryable<IPersistentEntity> GetAll( Paging paging );
         IQueryable<IPersistentEntity> GetByFilter( Filtering filter, Paging paging );
