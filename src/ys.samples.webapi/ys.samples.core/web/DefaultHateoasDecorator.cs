@@ -7,6 +7,10 @@ using ys.samples.services;
 
 namespace ys.samples.web {
     public class DefaultHateoasDecorator : IHateoasDecorator {
+        public HateoasModel DecorateException( Exception x ) {
+            throw new NotImplementedException();
+        }
+
         public HateoasModel DecorateModel( IDomainModel domainModel ) {
             return new HateoasModel() {
                 content = new HateoasModel.ResourceItem[] {

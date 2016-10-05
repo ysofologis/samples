@@ -18,6 +18,14 @@ namespace ys.samples.services {
             _adapter = new ModelAdapterT();
             _entityRepo = entityRepo;
         }
+        public IAuthenticationService authService {
+            get {
+                return _authService;
+            }
+            set {
+                _authService = value;
+            }
+        }
         void IDomainService.Delete( IDomainServiceRequestContext reqctx, string id ) {
             _authService.AuthenticateRequest(reqctx);
             var entity = _entityRepo.GetById(id);

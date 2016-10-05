@@ -44,11 +44,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="auth\AuthService.cs" />
+    <Compile Include="groups\GroupModel.cs" />
+    <Compile Include="groups\GroupModelAdapter.cs" />
+    <Compile Include="groups\GroupRepository.cs" />
+    <Compile Include="groups\GroupService.cs" />
+    <Compile Include="IGroupService.cs" />
     <Compile Include="IUserService.cs" />
     <Compile Include="Module.cs" />
     <Compile Include="ModuleSetup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UserModel.cs" />
+    <Compile Include="users\UserModel.cs" />
     <Compile Include="users\UserModelAdapter.cs" />
     <Compile Include="users\UserRepository.cs" />
     <Compile Include="users\UserService.cs" />

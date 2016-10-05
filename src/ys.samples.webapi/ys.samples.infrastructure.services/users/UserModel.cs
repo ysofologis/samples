@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ys.samples.services;
 
-namespace ys.samples.infrastructure {
+namespace ys.samples.infrastructure.users {
     public class UserModel : IDomainModel {
         public string Id {
             get;set;

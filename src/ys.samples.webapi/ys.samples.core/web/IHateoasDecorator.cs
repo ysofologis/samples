@@ -9,5 +9,7 @@ namespace ys.samples.web {
     public interface IHateoasDecorator {
         HateoasModel DecorateModel( IDomainModel domainModel );
         HateoasModel DecorateModel( IQueryable<IDomainModel> domainModel, Paging paging );
+        HateoasModel DecorateException( Exception x );
+
     }
 }

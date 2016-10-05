@@ -91,10 +91,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="config\AppSettingConfigService.cs" />
+    <Compile Include="config\AuthSetting.cs" />
+    <Compile Include="config\ConfigurationSetting.cs" />
+    <Compile Include="config\IConfigurationService.cs" />
     <Compile Include="dataaccess\EFEntityRepository.cs" />
+    <Compile Include="dataaccess\EFEntitySetWrapper.cs" />
     <Compile Include="dataaccess\EFPersistenceContext.cs" />
     <Compile Include="dataaccess\EntityHelper.cs" />
     <Compile Include="dataaccess\IEntityRepository.cs" />
+    <Compile Include="dataaccess\IEntitySet.cs" />
     <Compile Include="dataaccess\IPersistenceContext.cs" />
     <Compile Include="dataaccess\IPersistentEntity.cs" />
     <Compile Include="dataaccess\IUnitOfWork.cs" />
@@ -111,7 +117,10 @@
     <Compile Include="services\IDomainValidator.cs" />
     <Compile Include="services\IDomainServiceRequestContext.cs" />
     <Compile Include="Paging.cs" />
+    <Compile Include="services\SessionExpiredException.cs" />
+    <Compile Include="services\SessionNotAuthenticatedException.cs" />
     <Compile Include="web\DefaultHateoasDecorator.cs" />
+    <Compile Include="web\DomainServiceController.cs" />
     <Compile Include="web\HateoasModel.cs" />
     <Compile Include="web\IHateoasDecorator.cs" />
     <Compile Include="web\WebAPIDomainServiceRequestContext.cs" />
@@ -120,9 +129,7 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="config\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

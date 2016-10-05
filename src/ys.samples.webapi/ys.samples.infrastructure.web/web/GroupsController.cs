@@ -8,7 +8,7 @@ using System.Web.Http;
 using ys.samples.web;
 
 namespace ys.samples.infrastructure.web {
-    [RoutePrefix("api/users")]
-    public class UsersController : DomainServiceController<IUserService> {
+    [RoutePrefix("api/groups")]
+    public class GroupsController : DomainServiceController<IGroupService> {
     }
 }

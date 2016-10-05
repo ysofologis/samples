@@ -10,6 +10,7 @@ namespace ys.samples {
     public class Module : Autofac.Module {
         protected override void Load( ContainerBuilder builder ) {
             base.Load(builder);
+            builder.RegisterType<config.AppSettingConfigService>().As<config.IConfigurationService>().InstancePerDependency();
             builder.RegisterType<DefaultHateoasDecorator>().As<IHateoasDecorator>().InstancePerDependency();
         }
     }

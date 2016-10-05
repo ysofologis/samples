@@ -31,11 +31,25 @@ namespace ys.samples.web {
                 get;set;
             }
         }
+        public class ErrorInfo {
+            public string Message {
+                get;
+                set;
+            }
+            public string StackTrace {
+                get;
+                set;
+            }
+        }
         public IEnumerable<ResourceLink> links {
             get; set;
         }
         public IEnumerable<ResourceItem> content {
             get;set;
+        }
+        public ErrorInfo error {
+            get;
+            set;
         }
     }
 }
