@@ -15,14 +15,14 @@ namespace ys.samples.infrastructure {
             base.Load(builder);
 
             builder.RegisterType<SessionRepository>().InstancePerDependency();
-            builder.RegisterType<auth.AuthService>().As<services.IAuthenticationService>().InstancePerDependency();
+            builder.RegisterType<auth.AuthService>().As<services.IAuthenticationService>().InstancePerDependency().PropertiesAutowired();
 
             builder.RegisterType<UserRepository>().InstancePerDependency();
             builder.RegisterType<UserLoginRepository>().InstancePerDependency();
-            builder.RegisterType<UserService>().As<IUserService>().InstancePerDependency();
+            builder.RegisterType<UserService>().As<IUserService>().InstancePerDependency().PropertiesAutowired();
 
             builder.RegisterType<GroupRepository>().InstancePerDependency();
-            builder.RegisterType<GroupService>().As<IGroupService>().InstancePerDependency();
+            builder.RegisterType<GroupService>().As<IGroupService>().InstancePerDependency().PropertiesAutowired();
 
 
             // this module initialization/setup class

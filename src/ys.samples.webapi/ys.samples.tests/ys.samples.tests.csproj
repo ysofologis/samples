@@ -128,9 +128,11 @@
     <Compile Include="NullModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="services\AuthenticationTests.cs" />
+    <Compile Include="shared\DomainServiceRequestContextForTests.cs" />
+    <Compile Include="shared\IMockSetup.cs" />
     <Compile Include="shared\InMemoryPersistentContext.cs" />
-    <Compile Include="shared\UsingAutofacTest.cs" />
-    <Compile Include="shared\DependencyResolutionFixture.cs" />
+    <Compile Include="shared\AutofacTestCase.cs" />
+    <Compile Include="mocks\MockPersistanceContextSetup.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="controllers\" />

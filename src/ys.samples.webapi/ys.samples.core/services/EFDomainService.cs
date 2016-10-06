@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 using ys.samples.dataaccess;
 
 namespace ys.samples.services {
-    public abstract class EFDomainService<ModelT,EntityT, ModelAdapterT> : IDomainService, IDomainService<ModelT>
-        where ModelT : IDomainModel 
+    public abstract class EFDomainService<ModelT, EntityT, ModelAdapterT> : IDomainService, IDomainService<ModelT>
+        where ModelT : IDomainModel
         where EntityT : class, IPersistentEntity, new()
-        where ModelAdapterT : ModelAdapter<ModelT,EntityT>, new() {
+        where ModelAdapterT : ModelAdapter<ModelT, EntityT>, new() {
 
         private EntityRepository<EntityT> _entityRepo;
         private ModelAdapterT _adapter;
@@ -34,40 +34,46 @@ namespace ys.samples.services {
 
         IQueryable<IDomainModel> IDomainService.GetAll( IDomainServiceRequestContext reqctx, Paging paging ) {
             _authService.authenticateRequest(reqctx);
-            return _entityRepo.GetAll(paging).Select( x => _adapter.ModelFromEntity(x) ).Cast<IDomainModel>();
+            return _entityRepo.GetAll(paging).Select(x => _adapter.ModelFromEntity(x)).Cast<IDomainModel>();
         }
 
         IQueryable<IDomainModel> IDomainService.GetByFilter( IDomainServiceRequestContext reqctx, Filtering filtering, Paging paging ) {
             _authService.authenticateRequest(reqctx);
             return _entityRepo.GetByFilter(filtering, paging).Select(x => _adapter.ModelFromEntity(x)).Cast<IDomainModel>();
         }
-
         IDomainModel IDomainService.GetById( IDomainServiceRequestContext reqctx, string modelId ) {
-            _authService.authenticateRequest(reqctx);
-            return _adapter.ModelFromEntity( _entityRepo.GetById(modelId) );
+            return this.GetById(reqctx, modelId);
         }
 
-        void IDomainService.Update( IDomainServiceRequestContext reqctx, string id, IDomainModel updatedModel ) {
-            throw new NotImplementedException();
+        void IDomainService.Update( IDomainServiceRequestContext reqctx, IDomainModel updatedModel ) {
+            this.Update(reqctx, (ModelT) updatedModel);
         }
 
         void IDomainService.Add( IDomainServiceRequestContext reqctx, IDomainModel model ) {
-            throw new NotImplementedException();
+            this.Add(reqctx, (ModelT) model);
         }
 
         void IDomainService.AddBatch( IDomainServiceRequestContext reqctx, IEnumerable<IDomainModel> models ) {
-            throw new NotImplementedException();
+            this.AddBatch(reqctx, models.Cast<ModelT>());
         }
 
+        public void Add( IDomainServiceRequestContext reqctx, ModelT model ) {
+            this.authService.authenticateRequest(reqctx);
+            _entityRepo.Insert(_adapter.EntityFromModel(model));
+        }
         void IDomainService<ModelT>.Add( IDomainServiceRequestContext reqctx, ModelT model ) {
-            throw new NotImplementedException();
+            this.Add(reqctx, model);
         }
-
+        public void AddBatch( IDomainServiceRequestContext reqctx, IEnumerable<ModelT> models ) {
+            this.authService.authenticateRequest(reqctx);
+            _entityRepo.InsertMany(models.Select(x => _adapter.EntityFromModel(x)));
+        }
         void IDomainService<ModelT>.AddBatch( IDomainServiceRequestContext reqctx, IEnumerable<ModelT> models ) {
-            throw new NotImplementedException();
+            this.AddBatch(reqctx, models);
         }
 
         public IQueryable<ModelT> GetAll( IDomainServiceRequestContext reqctx, Paging paging ) {
+            this.authService.authenticateRequest(reqctx);
             var data = _entityRepo.GetAll(paging).ToList();
             return data.Select(x => _adapter.ModelFromEntity(x)).AsQueryable();
         }
@@ -76,16 +82,23 @@ namespace ys.samples.services {
         }
 
         IQueryable<ModelT> IDomainService<ModelT>.GetByFilter( IDomainServiceRequestContext reqctx, Filtering filtering, Paging paging ) {
-            throw new NotImplementedException();
+            return _entityRepo.GetByFilter(filtering, paging).Select(x => _adapter.ModelFromEntity(x));
         }
 
-        ModelT IDomainService<ModelT>.GetById( IDomainServiceRequestContext reqctx, string modelId ) {
+        public ModelT GetById( IDomainServiceRequestContext reqctx, string modelId ) {
             _authService.authenticateRequest(reqctx);
             return _adapter.ModelFromEntity(_entityRepo.GetById(modelId));
         }
-
-        void IDomainService<ModelT>.Update( IDomainServiceRequestContext reqctx, string id, ModelT updatedModel ) {
-            throw new NotImplementedException();
+        ModelT IDomainService<ModelT>.GetById( IDomainServiceRequestContext reqctx, string modelId ) {
+            return this.GetById(reqctx, modelId);
+        }
+        public void Update( IDomainServiceRequestContext reqctx, ModelT updatedModel ) {
+            _authService.authenticateRequest(reqctx);
+            var entity = _adapter.EntityFromModel(updatedModel);
+            _entityRepo.Update(entity);
+        }
+        void IDomainService<ModelT>.Update( IDomainServiceRequestContext reqctx, ModelT updatedModel ) {
+            this.Update(reqctx, updatedModel);
         }
     }
 }

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace ys.samples.config {
     public class ConfigurationSetting {
         protected ConfigurationSetting( string name ) {
+            this.Key = name;
         }
         public string Key {
             get; private set;

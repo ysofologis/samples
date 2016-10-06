@@ -16,7 +16,6 @@ namespace ys.samples.services {
         IDomainModel GetById( IDomainServiceRequestContext reqctx, 
                                                 string modelId );
         void Update( IDomainServiceRequestContext reqctx, 
-                                                string id, 
                                                 IDomainModel updatedModel );
         void Delete( IDomainServiceRequestContext reqctx, 
                                                 string id );
@@ -33,7 +32,6 @@ namespace ys.samples.services {
         new ModelT GetById( IDomainServiceRequestContext reqctx,
                                                 string modelId );
         void Update( IDomainServiceRequestContext reqctx,
-                                                string id,
                                                 ModelT updatedModel );
     }
 }
