@@ -8,8 +8,8 @@ using ys.samples.infrastructure.entities;
 using ys.samples.infrastructure.persistance;
 
 namespace ys.samples.infrastructure.users {
-    internal class UserRepository: EFEntityRepository<User> {
-        public UserRepository( InfraPersistenceContext perctx ) : base(perctx) {
+    internal class UserRepository: EntityRepository<User> {
+        public UserRepository( IPersistenceContext perctx ) : base(perctx) {
 
         }
     }

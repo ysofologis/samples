@@ -9,28 +9,38 @@ using System.Web.Http;
 using ys.samples.services;
 
 namespace ys.samples.web {
-    public abstract class DomainServiceController<ServiceT> : ApiController
-        where ServiceT : IDomainService  {
-        public IDomainService domainService {
-            get;set;
-        }
+
+    public class ServiceController<ServiceT> : ApiController {
         public IHateoasDecorator hateoasDecorator {
             get;
             set;
         }
-        protected HttpResponseMessage processRequest( Func<IDomainServiceRequestContext,HttpResponseMessage> func ) {
+        public ServiceT apiService {
+            get; set;
+        }
+        protected HttpResponseMessage processRequest( Func<IDomainServiceRequestContext, HttpResponseMessage> func ) {
             try {
                 return func(new WebAPIDomainServiceRequestContext(this));
-            }catch(Exception x) {
+            }catch( NotAuthenticatedException  x) {
+                return this.Request.CreateResponse(HttpStatusCode.Unauthorized, this.hateoasDecorator.DecorateException(x));
+            } catch ( ObjectExpiredException x ) {
+                return this.Request.CreateResponse(HttpStatusCode.Unauthorized, this.hateoasDecorator.DecorateException(x));
+            } catch ( Exception x ) {
                 return this.Request.CreateResponse(HttpStatusCode.InternalServerError, this.hateoasDecorator.DecorateException(x));
             }
         }
+    }
+    public abstract class DomainServiceController<ServiceT> : ServiceController<ServiceT>
+        where ServiceT : IDomainService  {
         [HttpGet]
         [Route("")]
         public HttpResponseMessage GetAll( int? page = null, int? pageSize = null ) {
+            return doGetAll(page, pageSize);
+        }
+        protected virtual HttpResponseMessage doGetAll( int? page = null, int? pageSize = null ) {
             return processRequest(( reqctx ) => {
                 var paging = new Paging() { page = page, pageSize = pageSize };
-                var items = this.domainService.GetAll(reqctx, paging);
+                var items = this.apiService.GetAll(reqctx, paging);
                 var hateoasModel = this.hateoasDecorator.DecorateModel(items, paging);
                 return this.Request.CreateResponse(System.Net.HttpStatusCode.OK, hateoasModel);
             });
@@ -38,8 +48,12 @@ namespace ys.samples.web {
         [HttpGet]
         [Route("{id}")]
         public HttpResponseMessage Get( string id ) {
+            return doGet(id);
+        }
+
+        protected virtual HttpResponseMessage doGet( string id ) {
             return processRequest(( reqctx ) => {
-                var hateoasModel = this.hateoasDecorator.DecorateModel(this.domainService.GetById(reqctx, id));
+                var hateoasModel = this.hateoasDecorator.DecorateModel(this.apiService.GetById(reqctx, id));
                 return this.Request.CreateResponse(System.Net.HttpStatusCode.OK, hateoasModel);
             });
         }

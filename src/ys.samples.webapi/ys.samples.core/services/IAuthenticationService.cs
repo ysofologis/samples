@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace ys.samples.services {
     public interface IAuthenticationService {
-        void AuthenticateRequest( IDomainServiceRequestContext reqctx );
-        void Login( IDomainServiceRequestContext reqctx );
-        void Logout( IDomainServiceRequestContext reqctx );
+        void authenticateRequest( IDomainServiceRequestContext reqctx );
+        string startSession( IDomainServiceRequestContext reqctx );
+        void endSession( IDomainServiceRequestContext reqctx );
     }
 }

@@ -29,6 +29,15 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'xunit|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\..\..\tests\ys.samples\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Autofac, Version=4.1.1.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\packages\Autofac.4.1.1\lib\net45\Autofac.dll</HintPath>
@@ -95,7 +104,7 @@
     <Compile Include="config\AuthSetting.cs" />
     <Compile Include="config\ConfigurationSetting.cs" />
     <Compile Include="config\IConfigurationService.cs" />
-    <Compile Include="dataaccess\EFEntityRepository.cs" />
+    <Compile Include="dataaccess\EntityRepository.cs" />
     <Compile Include="dataaccess\EFEntitySetWrapper.cs" />
     <Compile Include="dataaccess\EFPersistenceContext.cs" />
     <Compile Include="dataaccess\EntityHelper.cs" />
@@ -106,10 +115,14 @@
     <Compile Include="dataaccess\IUnitOfWork.cs" />
     <Compile Include="dataaccess\PersistentEntity.cs" />
     <Compile Include="ioc\IModuleSetup.cs" />
+    <Compile Include="log\ILogger.cs" />
+    <Compile Include="log\DotNetTraceLogger.cs" />
+    <Compile Include="log\ILoggerFactory.cs" />
     <Compile Include="Module.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Filtering.cs" />
     <Compile Include="services\EFDomainService.cs" />
+    <Compile Include="services\ExpectationFailedException.cs" />
     <Compile Include="services\IAuthenticationService.cs" />
     <Compile Include="services\IDomainModel.cs" />
     <Compile Include="services\IDomainModelAdapter.cs" />
@@ -117,8 +130,9 @@
     <Compile Include="services\IDomainValidator.cs" />
     <Compile Include="services\IDomainServiceRequestContext.cs" />
     <Compile Include="Paging.cs" />
-    <Compile Include="services\SessionExpiredException.cs" />
-    <Compile Include="services\SessionNotAuthenticatedException.cs" />
+    <Compile Include="services\ObjectNotFoundException.cs" />
+    <Compile Include="services\ObjectExpiredException.cs" />
+    <Compile Include="services\NotAuthenticatedException.cs" />
     <Compile Include="web\DefaultHateoasDecorator.cs" />
     <Compile Include="web\DomainServiceController.cs" />
     <Compile Include="web\HateoasModel.cs" />

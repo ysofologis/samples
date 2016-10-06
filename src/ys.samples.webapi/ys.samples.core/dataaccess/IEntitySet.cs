@@ -8,9 +8,11 @@ namespace ys.samples.dataaccess {
     public interface IEntitySet<EntityT> : IQueryable<EntityT>
         where EntityT: class, IPersistentEntity {
         EntityT Add( EntityT entity );
+        IEnumerable<EntityT> AddRange( IEnumerable<EntityT> entities );
         EntityT Attach( EntityT entity );
         EntityT Create( );
         EntityT Find( params object[] keyValues );
         EntityT Remove( EntityT entity );
+        void SetModified( EntityT entity );
     }
 }

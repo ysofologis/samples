@@ -25,7 +25,7 @@ namespace ys.samples.web {
         public Dictionary<string, string> GetHeaders( ) {
             var dict = new Dictionary<string, string>();
             foreach ( var x in _httpRequestMessage.Headers ) {
-                dict.Add(x.Key, x.Value.First());
+                dict.Add(x.Key.ToLower(), x.Value.First());
             }
             return dict;
         }

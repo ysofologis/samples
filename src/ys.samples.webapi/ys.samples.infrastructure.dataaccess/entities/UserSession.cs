@@ -22,7 +22,7 @@ namespace ys.samples.infrastructure.entities {
             set;
         }
         [Column("user_login_id")]
-        public long userLoginId {
+        public string userLoginId {
             get;
             set;
         }

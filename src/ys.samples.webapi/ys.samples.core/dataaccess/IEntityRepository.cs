@@ -14,6 +14,7 @@ namespace ys.samples.dataaccess {
         IPersistentEntity GetById( string id );
         IQueryable<IPersistentEntity> GetAll( Paging paging );
         IQueryable<IPersistentEntity> GetByFilter( Filtering filter, Paging paging );
+        IQueryable<IPersistentEntity> Search( Func<IPersistentEntity, bool> predicate );
         void Update( IPersistentEntity entity );
         void Delete( IPersistentEntity entity );
     }

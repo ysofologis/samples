@@ -9,10 +9,12 @@ using System.Threading.Tasks;
 
 namespace ys.samples.dataaccess {
     public class EFEntitySetWrapper<EntityT> : IEntitySet<EntityT>
-        where EntityT : class, IPersistentEntity {
+        where EntityT : class, IPersistentEntity,new() {
         private DbSet<EntityT> _dbset;
-        public EFEntitySetWrapper( DbSet<EntityT> dbset ) {
-            _dbset = dbset;
+        private DbContext _dbctx;
+        public EFEntitySetWrapper(DbContext dbctx) {
+            _dbset = _dbctx.Set<EntityT>();
+            _dbctx = dbctx;
         }
         public Type ElementType {
             get {
@@ -56,8 +58,16 @@ namespace ys.samples.dataaccess {
             return _dbset.Remove(entity);
         }
 
+        public void SetModified( EntityT entity ) {
+            _dbctx.Entry(entity).State = EntityState.Modified;
+        }
+
         IEnumerator IEnumerable.GetEnumerator( ) {
             return ( _dbset as IQueryable ).GetEnumerator();
+        }
+
+        public IEnumerable<EntityT> AddRange( IEnumerable<EntityT> entities ) {
+            return _dbset.AddRange(entities);
         }
     }
 }

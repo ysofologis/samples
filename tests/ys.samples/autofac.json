@@ -1,0 +1,16 @@
+﻿{
+  "modules": [
+    {
+      "type": "ys.samples.Module, ys.samples.core"
+    },
+    {
+      "type": "ys.samples.tests.NullModule, ys.samples.tests"
+    },
+    {
+      "type": "ys.samples.infrastructure.Module, ys.samples.infrastructure.services"
+    },
+    {
+      "type": "ys.samples.tests.NullModule, ys.samples.tests"
+    }
+  ]
+}

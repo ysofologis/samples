@@ -54,8 +54,8 @@ namespace ys.samples.dataaccess {
             _EFContext.Dispose();
         }
 
-        public IEntitySet<EntityT> GetEntitySet<EntityT>( ) where EntityT : class, IPersistentEntity {
-            return new EFEntitySetWrapper<EntityT>( _EFContext.Set<EntityT>() );
+        public IEntitySet<EntityT> GetEntitySet<EntityT>( ) where EntityT : class, IPersistentEntity,new() {
+            return new EFEntitySetWrapper<EntityT>( _EFContext );
         }
         public IUnitOfWork StartWork( bool joinExistingWork ) {
             if ( joinExistingWork ) {

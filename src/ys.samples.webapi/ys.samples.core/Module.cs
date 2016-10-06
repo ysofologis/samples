@@ -12,6 +12,7 @@ namespace ys.samples {
             base.Load(builder);
             builder.RegisterType<config.AppSettingConfigService>().As<config.IConfigurationService>().InstancePerDependency();
             builder.RegisterType<DefaultHateoasDecorator>().As<IHateoasDecorator>().InstancePerDependency();
+            builder.RegisterType<log.DotNetTraceLogger>().As<log.ILogger>().InstancePerDependency();
         }
     }
 }

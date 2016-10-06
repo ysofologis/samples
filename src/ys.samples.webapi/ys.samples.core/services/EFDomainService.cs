@@ -11,10 +11,10 @@ namespace ys.samples.services {
         where EntityT : class, IPersistentEntity, new()
         where ModelAdapterT : ModelAdapter<ModelT,EntityT>, new() {
 
-        private EFEntityRepository<EntityT> _entityRepo;
+        private EntityRepository<EntityT> _entityRepo;
         private ModelAdapterT _adapter;
         private IAuthenticationService _authService;
-        public EFDomainService( EFEntityRepository<EntityT> entityRepo ) {
+        public EFDomainService( EntityRepository<EntityT> entityRepo ) {
             _adapter = new ModelAdapterT();
             _entityRepo = entityRepo;
         }
@@ -27,23 +27,23 @@ namespace ys.samples.services {
             }
         }
         void IDomainService.Delete( IDomainServiceRequestContext reqctx, string id ) {
-            _authService.AuthenticateRequest(reqctx);
+            _authService.authenticateRequest(reqctx);
             var entity = _entityRepo.GetById(id);
             _entityRepo.Delete(entity);
         }
 
         IQueryable<IDomainModel> IDomainService.GetAll( IDomainServiceRequestContext reqctx, Paging paging ) {
-            _authService.AuthenticateRequest(reqctx);
+            _authService.authenticateRequest(reqctx);
             return _entityRepo.GetAll(paging).Select( x => _adapter.ModelFromEntity(x) ).Cast<IDomainModel>();
         }
 
         IQueryable<IDomainModel> IDomainService.GetByFilter( IDomainServiceRequestContext reqctx, Filtering filtering, Paging paging ) {
-            _authService.AuthenticateRequest(reqctx);
+            _authService.authenticateRequest(reqctx);
             return _entityRepo.GetByFilter(filtering, paging).Select(x => _adapter.ModelFromEntity(x)).Cast<IDomainModel>();
         }
 
         IDomainModel IDomainService.GetById( IDomainServiceRequestContext reqctx, string modelId ) {
-            _authService.AuthenticateRequest(reqctx);
+            _authService.authenticateRequest(reqctx);
             return _adapter.ModelFromEntity( _entityRepo.GetById(modelId) );
         }
 
@@ -80,7 +80,7 @@ namespace ys.samples.services {
         }
 
         ModelT IDomainService<ModelT>.GetById( IDomainServiceRequestContext reqctx, string modelId ) {
-            _authService.AuthenticateRequest(reqctx);
+            _authService.authenticateRequest(reqctx);
             return _adapter.ModelFromEntity(_entityRepo.GetById(modelId));
         }
 

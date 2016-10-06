@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 using ys.samples.dataaccess;
 
 namespace ys.samples.infrastructure.groups {
-    internal class GroupRepository : EFEntityRepository<entities.Group> {
-        public GroupRepository(infrastructure.persistance.InfraPersistenceContext ctx) : base(ctx) {
+    internal class GroupRepository : EntityRepository<entities.Group> {
+        public GroupRepository( IPersistenceContext ctx ) : base(ctx) {
 
         }
     }
