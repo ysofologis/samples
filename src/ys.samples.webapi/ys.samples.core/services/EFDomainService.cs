@@ -11,7 +11,7 @@ namespace ys.samples.services {
         where EntityT : class, IPersistentEntity
         where ModelAdapterT : ModelAdapter<ModelT, EntityT>, new() {
 
-        private EntityRepository<EntityT> _entityRepo;
+        protected EntityRepository<EntityT> _entityRepo;
         private ModelAdapterT _adapter;
         private IAuthenticationService _authService;
         public EFDomainService( EntityRepository<EntityT> entityRepo ) {
@@ -34,7 +34,7 @@ namespace ys.samples.services {
 
         IQueryable<IDomainModel> IDomainService.GetAll( IDomainServiceRequestContext reqctx, Paging paging ) {
             _authService.authenticateRequest(reqctx);
-            return _entityRepo.GetAll(paging).Select(x => _adapter.ModelFromEntity(x)).Cast<IDomainModel>();
+            return _entityRepo.GetAll(paging).ToList().Select(x => _adapter.ModelFromEntity(x)).Cast<IDomainModel>().AsQueryable();
         }
 
         IQueryable<IDomainModel> IDomainService.GetByFilter( IDomainServiceRequestContext reqctx, Filtering filtering, Paging paging ) {

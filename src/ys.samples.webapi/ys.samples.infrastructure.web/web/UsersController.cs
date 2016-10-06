@@ -10,5 +10,14 @@ using ys.samples.web;
 namespace ys.samples.infrastructure.web {
     [RoutePrefix("api/users")]
     public class UsersController : DomainServiceController<IUserService> {
+        [HttpGet]
+        [Route("{id}/session")]
+        public HttpResponseMessage getSession( string id ) {
+            return processRequest(reqctx => {
+                var session = this.apiService.getSession(reqctx,id);
+                var hateoasModel = this.hateoasDecorator.DecorateModel(session);
+                return this.Request.CreateResponse(System.Net.HttpStatusCode.OK, hateoasModel);
+            });
+        }
     }
 }

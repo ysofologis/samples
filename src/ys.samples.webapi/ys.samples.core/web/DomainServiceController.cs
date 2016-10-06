@@ -11,6 +11,8 @@ using ys.samples.services;
 namespace ys.samples.web {
 
     public class ServiceController<ServiceT> : ApiController {
+        public ServiceController( ) {
+        }
         public IHateoasDecorator hateoasDecorator {
             get;
             set;

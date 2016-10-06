@@ -27,6 +27,8 @@ namespace ys.samples.infrastructure {
                 }
                 addDefaultGroups(dbctx);
                 addAdminUsers(dbctx);
+                addDemoUser(dbctx, "demo01", "111111", "Demo 01", "Demo 01", "demo01@example.com");
+                addDemoUser(dbctx, "demo02", "111111", "Demo 02", "Demo 02", "demo02@example.com");
             }
         }
 
@@ -99,6 +101,49 @@ namespace ys.samples.infrastructure {
                 };
                 dbctx.UserGroups.Add(membership.makeUnique());
 
+                dbctx.SaveChanges();
+            }
+        }
+        private void addDemoUser( InfraDBContext dbctx, string userName, string userPwd, 
+                                                    string firstName, string lastName, string email ) {
+            var allUsers = dbctx.Set<User>();
+            var demoUser = allUsers.Where(x => x.Name == userName).FirstOrDefault();
+            if ( demoUser == null ) {
+                demoUser = new User() {
+                    Name = userName,
+                    FirstName = firstName,
+                    LastName = lastName,
+                    Email = email,
+                    dateInserted = DateTime.Now,
+                    dateUpdated = DateTime.Now,
+                };
+                demoUser.makeUnique();
+                allUsers.Add(demoUser);
+
+                var userLogin = new UserLogin() {
+                    userId = demoUser.Id,
+                    userPassword = userPwd,
+                    dateInserted = DateTime.Now,
+                    dateUpdated = DateTime.Now,
+                }.makeUnique();
+                dbctx.Set<UserLogin>().Add(userLogin);
+
+                var userSession = new UserSession() {
+                    Id = "session-for-" + userName,
+                    LoginDate = DateTime.Now,
+                    LogoutDate = DateTime.MinValue,
+                    LoginFailures = 0,
+                    userLoginId = userLogin.Id,
+                    dateInserted = DateTime.Now,
+                    dateUpdated = DateTime.Now,
+                };
+                dbctx.Set<UserSession>().Add(userSession);
+
+                dbctx.SaveChanges();
+            } else {
+                var userLogin = dbctx.Set<UserLogin>().Where(x => x.userId == demoUser.Id).FirstOrDefault();
+                var userSession = dbctx.Set<UserSession>().Where(x => x.userLoginId == userLogin.Id).FirstOrDefault();
+                userSession.LoginDate = DateTime.Now;
                 dbctx.SaveChanges();
             }
         }
