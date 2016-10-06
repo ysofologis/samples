@@ -7,8 +7,26 @@ using System.Threading.Tasks;
 using ys.samples.dataaccess;
 
 namespace ys.samples.infrastructure.entities {
+    public interface IUserEntity : IPersistentEntity {
+        string Name {
+            get;
+            set;
+        }
+        string FirstName {
+            get;
+            set;
+        }
+        string LastName {
+            get;
+            set;
+        }
+        string Email {
+            get;
+            set;
+        }
+    }
     [AppTable("users")]
-    public class User : PersistentEntity {
+    internal class User : PersistentEntity, IUserEntity {
         [Index("IX_NAME", IsUnique =true)]
         public string Name {
             get; set;

@@ -77,6 +77,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DomainTable.cs" />
+    <Compile Include="entities\Company.cs" />
+    <Compile Include="entities\CompanyTeam.cs" />
+    <Compile Include="entities\Member.cs" />
+    <Compile Include="entities\TeamComment.cs" />
+    <Compile Include="entities\TeamPeriod.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -84,9 +89,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="entities.ef\" />
-    <Folder Include="entities.nhib\" />
-    <Folder Include="entities\" />
+    <Folder Include="persistence\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ys.samples.core\ys.samples.core.csproj">

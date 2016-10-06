@@ -9,6 +9,6 @@ namespace ys.samples.dataaccess {
     public interface IPersistenceContext : IDisposable {
         IUnitOfWork StartWork( bool joinExistingWork );
         object GetUnderlyingSession( );
-        IEntitySet<EntityT> GetEntitySet<EntityT>( ) where EntityT : class, IPersistentEntity, new();
+        IEntitySet<EntityT> GetEntitySet<EntityT>( ) where EntityT : class, IPersistentEntity;
     }
 }

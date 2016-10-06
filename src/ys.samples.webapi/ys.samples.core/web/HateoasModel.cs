@@ -32,11 +32,19 @@ namespace ys.samples.web {
             }
         }
         public class ErrorInfo {
-            public string Message {
+            public string message {
                 get;
                 set;
             }
-            public string StackTrace {
+            public string type {
+                get;
+                set;
+            }
+            public string stackTrace {
+                get;
+                set;
+            }
+            public string rootCause {
                 get;
                 set;
             }

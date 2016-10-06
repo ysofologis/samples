@@ -8,15 +8,15 @@ using ys.samples.dataaccess;
 namespace ys.samples.services {
     public interface IDomainModelAdapter {
         IDomainModel ModelFromEntity( IPersistentEntity entity );
-        IPersistentEntity EntityFromModel( IDomainModel model );
+        IPersistentEntity EntityFromModel( IEntityFactory<IPersistentEntity> entitySet, IDomainModel model );
     }
 
     public abstract class ModelAdapter<ModelT, EntityT> : IDomainModelAdapter
         where ModelT : IDomainModel
-        where EntityT : class, IPersistentEntity, new() {
-        public abstract EntityT EntityFromModel( ModelT model );
-        IPersistentEntity IDomainModelAdapter.EntityFromModel( IDomainModel model ) {
-            return this.EntityFromModel( (ModelT) model);
+        where EntityT : class, IPersistentEntity {
+        public abstract EntityT EntityFromModel( IEntityFactory<EntityT> factory, ModelT model );
+        IPersistentEntity IDomainModelAdapter.EntityFromModel( IEntityFactory<IPersistentEntity> factory, IDomainModel model ) {
+            return this.EntityFromModel( (IEntitySet<EntityT>) factory, (ModelT) model);
         }
 
         public abstract ModelT ModelFromEntity( EntityT entity );

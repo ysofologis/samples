@@ -19,5 +19,9 @@ namespace ys.samples.infrastructure.users {
         public string Email {
             get;set;
         }
+        public string Name {
+            get;
+            internal set;
+        }
     }
 }

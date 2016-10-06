@@ -22,31 +22,31 @@ namespace ys.samples.shared {
         }
         protected IDomainServiceRequestContext setUserSession( ILifetimeScope currentScope, string username, string password ) {
             var perctx = currentScope.Resolve<IPersistenceContext>();
-            var users = perctx.GetEntitySet<User>();
+            var users = perctx.GetEntitySet<IUserEntity>();
             var user = users.Where(x => x.Name == username).FirstOrDefault();
             if ( user == null ) {
-                user = users.Add(new User() {
-                    Name = username
-                });
+                user = users.Create();
                 user.makeUnique();
+                user.Name = username;
+                users.Add(user);
             }
-            var userLogins = perctx.GetEntitySet<UserLogin>();
+            var userLogins = perctx.GetEntitySet<IUserLoginEntity>();
             var login = userLogins.Where(x => x.userId == user.Id).FirstOrDefault();
             if ( login == null ) {
-                login = userLogins.Add(new UserLogin() {
-                    userId = user.Id,
-                    userPassword = password,
-                });
+                login = userLogins.Create();
+                login.userId = user.Id;
+                login.userPassword = password;
                 login.makeUnique();
+                userLogins.Add(login);
             }
-            var userSessions = perctx.GetEntitySet<UserSession>();
+            var userSessions = perctx.GetEntitySet<IUserSessionEntity>();
             var loginSession = userSessions.Where(x => x.userLoginId == login.Id).FirstOrDefault();
             if ( loginSession == null ) {
-                loginSession = userSessions.Add(new UserSession() {
-                    userLoginId = login.Id,
-                    LoginDate = DateTime.Now,
-                });
+                loginSession = userSessions.Create();
+                loginSession.userLoginId = login.Id;
+                loginSession.LoginDate = DateTime.Now;
                 loginSession.makeUnique();
+                userSessions.Add(loginSession);
             }
             var reqctx = new DomainServiceRequestContextForTests();
             reqctx.headers["session-id"] = loginSession.Id;

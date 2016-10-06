@@ -8,7 +8,7 @@ using ys.samples.dataaccess;
 namespace ys.samples.services {
     public abstract class EFDomainService<ModelT, EntityT, ModelAdapterT> : IDomainService, IDomainService<ModelT>
         where ModelT : IDomainModel
-        where EntityT : class, IPersistentEntity, new()
+        where EntityT : class, IPersistentEntity
         where ModelAdapterT : ModelAdapter<ModelT, EntityT>, new() {
 
         private EntityRepository<EntityT> _entityRepo;
@@ -59,14 +59,14 @@ namespace ys.samples.services {
 
         public void Add( IDomainServiceRequestContext reqctx, ModelT model ) {
             this.authService.authenticateRequest(reqctx);
-            _entityRepo.Insert(_adapter.EntityFromModel(model));
+            _entityRepo.Insert(_adapter.EntityFromModel(_entityRepo, model));
         }
         void IDomainService<ModelT>.Add( IDomainServiceRequestContext reqctx, ModelT model ) {
             this.Add(reqctx, model);
         }
         public void AddBatch( IDomainServiceRequestContext reqctx, IEnumerable<ModelT> models ) {
             this.authService.authenticateRequest(reqctx);
-            _entityRepo.InsertMany(models.Select(x => _adapter.EntityFromModel(x)));
+            _entityRepo.InsertMany(models.Select(x => _adapter.EntityFromModel(_entityRepo, x)));
         }
         void IDomainService<ModelT>.AddBatch( IDomainServiceRequestContext reqctx, IEnumerable<ModelT> models ) {
             this.AddBatch(reqctx, models);
@@ -94,7 +94,7 @@ namespace ys.samples.services {
         }
         public void Update( IDomainServiceRequestContext reqctx, ModelT updatedModel ) {
             _authService.authenticateRequest(reqctx);
-            var entity = _adapter.EntityFromModel(updatedModel);
+            var entity = _adapter.EntityFromModel(_entityRepo, updatedModel);
             _entityRepo.Update(entity);
         }
         void IDomainService<ModelT>.Update( IDomainServiceRequestContext reqctx, ModelT updatedModel ) {

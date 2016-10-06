@@ -6,9 +6,72 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using ys.samples.dataaccess;
+using ys.samples.infrastructure.entities;
 
 namespace ys.samples.shared {
     class InMemoryPersistentContext : IPersistenceContext {
+        private static class Workspace {
+            public abstract class EntityBase : IPersistentEntity {
+                public DateTime? dateInserted {
+                    get; set;
+                }
+                public DateTime? dateUpdated {
+                    get; set;
+                }
+                public string Id {
+                    get; set;
+                }
+            }
+            public class User : EntityBase,IUserEntity {
+                public string Email {
+                    get; set;
+                }
+                public string FirstName {
+                    get; set;
+                }
+                public string LastName {
+                    get; set;
+                }
+                public string Name {
+                    get; set;
+                }
+            }
+            public class Group : EntityBase, IGroupEntity {
+                public string Name {
+                    get;set;
+                }
+            }
+            public class UserLogin : EntityBase, IUserLoginEntity {
+                public string userId {
+                    get;set;
+                }
+                public string userPassword {
+                    get; set;
+                }
+            }
+            public class UserSession : EntityBase, IUserSessionEntity {
+                public DateTime LoginDate {
+                    get; set;
+                }
+                public int LoginFailures {
+                    get; set;
+                }
+                public DateTime LogoutDate {
+                    get; set;
+                }
+                public string userLoginId {
+                    get;set;
+                }
+                public IUserLoginEntity getUserLogin( ) {
+                    throw new NotImplementedException();
+                }
+            }
+            private static readonly Type [] entityTypes = typeof(Workspace).GetNestedTypes();
+            public static EntityT CreateEntity<EntityT>( ) where EntityT: class, IPersistentEntity {
+                var implementorType = entityTypes.Where( x => x.GetInterfaces().Contains(typeof(EntityT)) ).FirstOrDefault();
+                return (EntityT) Activator.CreateInstance(implementorType);
+            }
+        }
         private class UnitOfWork : IUnitOfWork {
             public void Dispose( ) {
             }
@@ -20,7 +83,7 @@ namespace ys.samples.shared {
             }
         }
         private class EntitySetWrapper<EntityT> : IEntitySet<EntityT>
-            where EntityT : class, IPersistentEntity, new() {
+            where EntityT : class, IPersistentEntity {
             public List<EntityT> Entities {
                 get;
                 set;
@@ -65,7 +128,8 @@ namespace ys.samples.shared {
             }
 
             public EntityT Create( ) {
-                return new EntityT();
+                var r = Workspace.CreateEntity<EntityT>();
+                return r;
             }
 
             public EntityT Find( params object[] keyValues ) {
@@ -80,9 +144,7 @@ namespace ys.samples.shared {
                 this.Entities.Remove(entity);
                 return entity;
             }
-
             public void SetModified( EntityT entity ) {
-                
             }
 
             IEnumerator IEnumerable.GetEnumerator( ) {

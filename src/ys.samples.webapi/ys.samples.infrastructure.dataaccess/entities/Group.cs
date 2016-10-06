@@ -7,8 +7,14 @@ using System.Threading.Tasks;
 using ys.samples.dataaccess;
 
 namespace ys.samples.infrastructure.entities {
+    public interface IGroupEntity : IPersistentEntity {
+        string Name {
+            get;
+            set;
+        }
+    }
     [AppTable("groups")]
-    public class Group : PersistentEntity {
+    internal class Group : PersistentEntity, IGroupEntity {
         [Index(IsUnique=true)]
         public string Name {
             get;

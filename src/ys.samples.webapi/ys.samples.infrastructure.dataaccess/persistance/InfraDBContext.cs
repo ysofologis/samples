@@ -7,10 +7,11 @@ using System.Data.SQLite;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ys.samples.dataaccess;
 using ys.samples.infrastructure.entities;
 
 namespace ys.samples.infrastructure.persistance {
-    internal class InfraDBContext : DbContext {
+    internal class InfraDBContext : EFDataContext {
         private string _sqliteSchema;
         public InfraDBContext() : base("name=infrastructure-db") {
         }

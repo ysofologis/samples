@@ -7,8 +7,23 @@ using ys.samples.services;
 
 namespace ys.samples.web {
     public class DefaultHateoasDecorator : IHateoasDecorator {
+        private Exception getRootException( Exception x ) {
+            if ( x.InnerException == null ) {
+                return x;
+            } else {
+                return getRootException(x);
+            }
+        }
         public HateoasModel DecorateException( Exception x ) {
-            throw new NotImplementedException();
+            var rootEx = getRootException(x);
+            return new HateoasModel() {
+                error = new HateoasModel.ErrorInfo() {
+                    message = x.Message,
+                    type = x.GetType().FullName,
+                    stackTrace = x.StackTrace,
+                    rootCause = rootEx.Message,
+                }
+            };
         }
 
         public HateoasModel DecorateModel( IDomainModel domainModel ) {

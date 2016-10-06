@@ -8,6 +8,7 @@ using ys.samples.ioc;
 using ys.samples.infrastructure.persistance;
 using ys.samples.dataaccess;
 using System.Data.Entity;
+using ys.samples.infrastructure.entities;
 
 namespace ys.samples.infrastructure {
     internal class ModuleSetup : IModuleSetup {
@@ -18,7 +19,8 @@ namespace ys.samples.infrastructure {
 
         public void setupModule( IContainer iocResolver ) {
 
-            using ( var perctx = iocResolver.Resolve<InfraPersistenceContext>() ) {
+            using ( var perctx = iocResolver.Resolve<IPersistenceContext>() ) {
+                var test = perctx.GetEntitySet<IUserEntity>();
                 var dbctx = perctx.GetUnderlyingSession() as InfraDBContext;
                 if ( dbctx.isSQLite ) {
                     prepareSchemaForSQLite(dbctx);

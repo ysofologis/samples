@@ -10,7 +10,7 @@ namespace ys.samples.infrastructure.auth {
         public string Id {
             get;set;
         }
-        public string userId {
+        public string userLoginId {
             get;set;
         }
         public DateTime loginDate {

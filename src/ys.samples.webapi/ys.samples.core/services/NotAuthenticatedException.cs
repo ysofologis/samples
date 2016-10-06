@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ys.samples.services {
     public class NotAuthenticatedException : Exception {
-        public NotAuthenticatedException(string msg = "") : base(msg) {
+        public NotAuthenticatedException(string msg = "Not Authenticated") : base(msg) {
 
         }
     }

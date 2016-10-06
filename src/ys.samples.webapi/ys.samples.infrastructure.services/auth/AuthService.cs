@@ -62,11 +62,10 @@ namespace ys.samples.infrastructure.auth {
                                             _sessionRepo.Update(existingSession);
                                             return existingSession.Id;
                                         } else {
-                                            var newSession = new UserSession() {
-                                                LoginDate = DateTime.Now,
-                                                userLogin = userLogin,
-                                                LoginFailures = 0,
-                                            };
+                                            var newSession = _sessionRepo.Create();
+                                            newSession.LoginDate = DateTime.Now;
+                                            newSession.userLoginId = userLogin.Id;
+                                            newSession.LoginFailures = 0;
                                             _sessionRepo.Insert(newSession);
                                             return newSession.Id;
                                         }

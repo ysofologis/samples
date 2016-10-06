@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using ys.samples.dataaccess;
 
 namespace ys.samples.infrastructure.auth {
-    internal class SessionRepository : EntityRepository<entities.UserSession> {
+    internal class SessionRepository : EntityRepository<entities.IUserSessionEntity> {
         public SessionRepository( IPersistenceContext perctx ) : base(perctx) {
         }
     }

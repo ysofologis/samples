@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ys.samples.dataaccess {
-    public class EFPersistenceContext : IPersistenceContext {
+    public abstract class EFPersistenceContext : IPersistenceContext {
         private class UnitOfWork : IUnitOfWork {
             public DbContext context {
                 get;
@@ -45,16 +45,16 @@ namespace ys.samples.dataaccess {
                 this.handled = true;
             }
         }
-        private DbContext _EFContext;
+        private EFDataContext _EFContext;
         private UnitOfWork _currentUoW;
-        public EFPersistenceContext( DbContext efctx ) {
+        public EFPersistenceContext( EFDataContext efctx ) {
             _EFContext = efctx;
         }
         public void Dispose( ) {
             _EFContext.Dispose();
         }
 
-        public IEntitySet<EntityT> GetEntitySet<EntityT>( ) where EntityT : class, IPersistentEntity,new() {
+        public IEntitySet<EntityT> GetEntitySet<EntityT>( ) where EntityT : class, IPersistentEntity {
             return new EFEntitySetWrapper<EntityT>( _EFContext );
         }
         public IUnitOfWork StartWork( bool joinExistingWork ) {

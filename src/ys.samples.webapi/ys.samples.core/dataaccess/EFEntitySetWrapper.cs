@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Core.Metadata.Edm;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -9,12 +11,12 @@ using System.Threading.Tasks;
 
 namespace ys.samples.dataaccess {
     public class EFEntitySetWrapper<EntityT> : IEntitySet<EntityT>
-        where EntityT : class, IPersistentEntity,new() {
-        private DbSet<EntityT> _dbset;
-        private DbContext _dbctx;
-        public EFEntitySetWrapper(DbContext dbctx) {
-            _dbset = _dbctx.Set<EntityT>();
+        where EntityT : class, IPersistentEntity {
+        private DbSet _dbset;
+        private EFDataContext _dbctx;
+        public EFEntitySetWrapper(EFDataContext dbctx) {
             _dbctx = dbctx;
+            _dbset = _dbctx.Set( dbctx.GetImplementationType(typeof(EntityT)));
         }
         public Type ElementType {
             get {
@@ -35,19 +37,19 @@ namespace ys.samples.dataaccess {
         }
 
         public EntityT Add( EntityT entity ) {
-            return _dbset.Add(entity);
+            return (EntityT) _dbset.Add(entity);
         }
 
         public EntityT Attach( EntityT entity ) {
-            return _dbset.Attach(entity);
+            return (EntityT) _dbset.Attach(entity);
         }
 
         public EntityT Create( ) {
-            return _dbset.Create();
+            return (EntityT) _dbset.Create();
         }
 
         public EntityT Find( params object[] keyValues ) {
-            return _dbset.Find(keyValues);
+            return (EntityT) _dbset.Find(keyValues);
         }
 
         public IEnumerator<EntityT> GetEnumerator( ) {
@@ -55,7 +57,7 @@ namespace ys.samples.dataaccess {
         }
 
         public EntityT Remove( EntityT entity ) {
-            return _dbset.Remove(entity);
+            return (EntityT) _dbset.Remove(entity);
         }
 
         public void SetModified( EntityT entity ) {
@@ -67,7 +69,7 @@ namespace ys.samples.dataaccess {
         }
 
         public IEnumerable<EntityT> AddRange( IEnumerable<EntityT> entities ) {
-            return _dbset.AddRange(entities);
+            return (IEnumerable<EntityT>) _dbset.AddRange(entities);
         }
     }
 }

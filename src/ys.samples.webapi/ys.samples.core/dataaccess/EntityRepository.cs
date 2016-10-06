@@ -8,13 +8,12 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ys.samples.dataaccess {
-    public class EntityRepository<EntityT> : IEntityRepository
-        where EntityT : class, IPersistentEntity,new() {
+    public class EntityRepository<EntityT> : IEntityRepository, IEntityFactory<EntityT>
+        where EntityT : class, IPersistentEntity {
         private IEntitySet<EntityT> _entitySet;
         public EntityRepository( IPersistenceContext persistentContext ) {
             _entitySet = persistentContext.GetEntitySet<EntityT>();
         }
-
         public void Delete( EntityT entity ) {
             _entitySet.Remove(entity);
         }
@@ -169,6 +168,10 @@ namespace ys.samples.dataaccess {
         }
         public IQueryable<EntityT> Search( Func<EntityT, bool> predicate ) {
             return _entitySet.Where(predicate).AsQueryable();
+        }
+
+        public EntityT Create( ) {
+            return _entitySet.Create();
         }
     }
 }
