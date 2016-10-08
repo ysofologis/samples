@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -7,8 +8,26 @@ using System.Threading.Tasks;
 using ys.samples.dataaccess;
 
 namespace ys.samples.devunion.entities {
+    public interface ITeamPeriodEntity : IPersistentEntity {
+        string TeamId {
+            get;
+            set;
+        }
+        DateTime FromDate {
+            get;
+            set;
+        }
+        DateTime ToDate {
+            get;
+            set;
+        }
+        string Manager {
+            get;
+            set;
+        }
+    }
     [DomainTable("team_periods")]
-    public class TeamPeriod : PersistentEntity {
+    internal class TeamPeriod : PersistentEntity, ITeamPeriodEntity {
         [Column("team_id")]
         [ReferenceKey]
         public string TeamId {
@@ -30,7 +49,8 @@ namespace ys.samples.devunion.entities {
         }
         [Column("manager_sobriquet")]
         [Index(IsUnique =true)]
-        public string ManagerSobriquet {
+        [StringLength(50)]
+        public string Manager {
             get;set;
         }
     }

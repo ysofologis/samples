@@ -8,19 +8,40 @@ using System.Threading.Tasks;
 using ys.samples.dataaccess;
 
 namespace ys.samples.devunion.entities {
+    public interface ICompanyEntity : IPersistentEntity {
+        string Name {
+            get;
+            set;
+        }
+        string Sobriquet {
+            get;
+            set;
+        }
+        string Address {
+            get;
+            set;
+        }
+        string UpdatedByMemberId {
+            get;
+            set;
+        }
+    }
     [DomainTable("companies")]
-    public class Company : PersistentEntity {
+    internal class Company : PersistentEntity, ICompanyEntity {
         [Column("name")]
+        [StringLength(50)]
         public string Name {
             get;
             set;
         }
         [Column("sobriquet")]
+        [StringLength(50)]
         public string Sobriquet {
             get;
             set;
         }
         [Column("address")]
+        [StringLength(50)]
         public string Address {
             get;
             set;

@@ -20,6 +20,7 @@ namespace ys.samples.infrastructure.entities {
     }
     [AppTable("userlogins")]
     internal class UserLogin : PersistentEntity, IUserLoginEntity {
+        [StringLength(20)]
         public string userPassword {
             get;set;
         }

@@ -8,10 +8,26 @@ using System.Threading.Tasks;
 using ys.samples.dataaccess;
 
 namespace ys.samples.devunion.entities {
+    public interface ITeamCommentEntity : IPersistentEntity {
+        string TeamId {
+            get;
+            set;
+        }
+        string PostedByMemberId {
+            get;
+            set;
+        }
+        string Comment {
+            get;
+            set;
+        }
+        string PeriodId {
+            get;
+            set;
+        }
+    }
     [DomainTable("team_comments")]
-    public class TeamComment : PersistentEntity {
-        [Column("team_id")]
-        [ReferenceKey]
+    internal class TeamComment : PersistentEntity, ITeamCommentEntity {
         public string TeamId {
             get;
             set;

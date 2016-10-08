@@ -266,3 +266,4 @@ __pycache__/
 
 # Cake - Uncomment if you are using it
 # tools/
+/src/ys.samples.webapi/ys.samples.webapi/WebClients/devcafe/nbproject/private/

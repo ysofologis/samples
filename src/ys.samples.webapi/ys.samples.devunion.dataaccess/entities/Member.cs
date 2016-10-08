@@ -8,10 +8,25 @@ using System.Threading.Tasks;
 using ys.samples.dataaccess;
 
 namespace ys.samples.devunion.entities {
+    public interface IMemberEntity : IPersistentEntity {
+        string Nickname {
+            get;
+            set;
+        }
+        string UserId {
+            get;
+            set;
+        }
+        string JobTitle {
+            get;
+            set;
+        }
+    }
     [DomainTable("members")]
-    public class Member : PersistentEntity {
+    internal class Member : PersistentEntity, IMemberEntity {
         [Column("nickname")]
-        public string NickName {
+        [StringLength(50)]
+        public string Nickname {
             get;
             set;
         }
@@ -22,6 +37,7 @@ namespace ys.samples.devunion.entities {
             set;
         }
         [Column("job_title")]
+        [StringLength(50)]
         public string JobTitle {
             get;set;
         }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -28,15 +29,19 @@ namespace ys.samples.infrastructure.entities {
     [AppTable("users")]
     internal class User : PersistentEntity, IUserEntity {
         [Index("IX_NAME", IsUnique =true)]
+        [StringLength(50)]
         public string Name {
             get; set;
         }
+        [StringLength(50)]
         public string FirstName {
             get;set;
         }
+        [StringLength(50)]
         public string LastName {
             get; set;
         }
+        [StringLength(50)]
         public string Email {
             get; set;
         }

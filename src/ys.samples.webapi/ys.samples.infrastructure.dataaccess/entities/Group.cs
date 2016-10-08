@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -16,6 +17,7 @@ namespace ys.samples.infrastructure.entities {
     [AppTable("groups")]
     internal class Group : PersistentEntity, IGroupEntity {
         [Index(IsUnique=true)]
+        [StringLength(50)]
         public string Name {
             get;
             set;
