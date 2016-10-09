@@ -11,7 +11,7 @@ namespace ys.samples.infrastructure.users {
     internal class UserModelAdapter : ModelAdapter<UserModel,IUserEntity> {
         public override IUserEntity EntityFromModel( IEntityFactory<IUserEntity> factory, UserModel model ) {
             var entity = factory.Create();
-            entity.Id = model.Id;
+            entity.id = model.Id;
             entity.Name = model.Name;
             entity.FirstName = model.FirstName;
             entity.LastName = model.LastName;
@@ -20,7 +20,7 @@ namespace ys.samples.infrastructure.users {
         }
         public override UserModel ModelFromEntity( IUserEntity entity ) {
             return new UserModel() {
-                Id = entity.Id,
+                Id = entity.id,
                 Name = entity.Name,
                 Email = entity.Email,
                 FirstName = entity.FirstName,

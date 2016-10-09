@@ -8,42 +8,49 @@ using System.Threading.Tasks;
 using ys.samples.dataaccess;
 
 namespace ys.samples.devunion.entities {
-    public interface ICompanyTeamEntity: IPersistentEntity {
-        string Name {
+    public interface ICompanyTeamEntity: ITrackedEntity {
+        string companyId {
             get;
             set;
         }
-        string Sobriquet {
+        string name {
             get;
             set;
         }
-        string UpdatedByMemberId {
+        string sobriquet {
             get;
             set;
         }
     }
-    [DomainTable("company_teams")]
-    internal class CompanyTeam : PersistentEntity, ICompanyTeamEntity {
-        [Column("name")]
-        [StringLength(50)]
-        public string Name {
+    internal class CompanyTeam : TrackedPersistentEntity, ICompanyTeamEntity {
+        public virtual string companyId {
             get;
             set;
         }
-        [Column("sobriquet")]
-        [StringLength(50)]
-        public string Sobriquet {
+        public virtual Company company {
             get;
             set;
         }
-        [Column("member_id")]
-        [ReferenceKey]
-        public string UpdatedByMemberId {
-            get; set;
-        }
-        public virtual Member UpdatedByMember {
+        public virtual string name {
             get;
             set;
+        }
+        public virtual string sobriquet {
+            get;
+            set;
+        }
+        public virtual IList<CompanyTeamAffair> teamAffairs {
+            get;
+            set;
+        }
+    }
+    internal class CompanyTeamMap : EntityMap<CompanyTeam> {
+        public CompanyTeamMap( ) {
+            Map(x => x.companyId, "company_id");
+            Map(x => x.name, "team_name");
+            Map(x => x.sobriquet, "team_sobriquet");
+            References<Company>(x => x.company).Column("company_id");
+            HasMany<CompanyTeamAffair>(x => x.teamAffairs).KeyColumn("team_id").Inverse().Cascade.All();
         }
     }
 }

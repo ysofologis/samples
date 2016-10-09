@@ -14,7 +14,7 @@ namespace ys.samples.dataaccess {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [StringLength(KEY_SIZE)]
-        public string Id {
+        public string id {
             get;
             set;
         }

@@ -53,21 +53,21 @@ namespace ys.samples.infrastructure.auth {
                         if ( authContent.Length == 2 ) {
                             var user = _userRepo.Search(x => x.Name.Equals(authContent[0], StringComparison.CurrentCultureIgnoreCase) ).FirstOrDefault();
                             if ( user != null ) {
-                                var userLogin = _userLoginRepo.Search(x => x.userId == user.Id).FirstOrDefault();
+                                var userLogin = _userLoginRepo.Search(x => x.userId == user.id).FirstOrDefault();
                                 if ( userLogin != null ) {
-                                    var existingSession = _sessionRepo.Search(x => x.userLoginId == userLogin.Id).FirstOrDefault();
+                                    var existingSession = _sessionRepo.Search(x => x.userLoginId == userLogin.id).FirstOrDefault();
                                     if ( userLogin.userPassword == authContent[1] ) {
                                         if ( existingSession != null ) {
                                             existingSession.LoginDate = DateTime.Now;
                                             _sessionRepo.Update(existingSession);
-                                            return existingSession.Id;
+                                            return existingSession.id;
                                         } else {
                                             var newSession = _sessionRepo.Create();
                                             newSession.LoginDate = DateTime.Now;
-                                            newSession.userLoginId = userLogin.Id;
+                                            newSession.userLoginId = userLogin.id;
                                             newSession.LoginFailures = 0;
                                             _sessionRepo.Insert(newSession);
-                                            return newSession.Id;
+                                            return newSession.id;
                                         }
                                     } else {
                                         if ( existingSession != null ) {

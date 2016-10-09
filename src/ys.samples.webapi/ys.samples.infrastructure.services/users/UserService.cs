@@ -20,7 +20,7 @@ namespace ys.samples.infrastructure.users {
         public SessionModel getSession( IDomainServiceRequestContext reqctx, string userId ) {
             this.authService.authenticateRequest(reqctx);
             var userLogin = _loginRepo.Search(x => x.userId == userId).FirstOrDefault();
-            var session = _sessionRepo.Search( x => x.userLoginId == userLogin.Id).FirstOrDefault() ;
+            var session = _sessionRepo.Search( x => x.userLoginId == userLogin.id).FirstOrDefault() ;
             return new SessionModelAdapter().ModelFromEntity(session);
         }
     }

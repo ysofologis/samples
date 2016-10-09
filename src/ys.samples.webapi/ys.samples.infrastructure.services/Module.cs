@@ -8,20 +8,24 @@ using ys.samples.infrastructure.users;
 using ys.samples.ioc;
 using ys.samples.infrastructure.groups;
 using ys.samples.infrastructure.auth;
+using ys.samples.dataaccess;
 
 namespace ys.samples.infrastructure {
     public class Module : Autofac.Module {
+        private IPersistenceContext resolvePersistence( IComponentContext ctx ) {
+            return ctx.ResolveNamed<IPersistenceContext>("infra-db");
+        }
         protected override void Load( ContainerBuilder builder ) {
             base.Load(builder);
 
-            builder.RegisterType<SessionRepository>().InstancePerDependency();
+            builder.Register<SessionRepository>( x => new SessionRepository(resolvePersistence(x)) ).InstancePerDependency();
             builder.RegisterType<auth.AuthService>().As<services.IAuthenticationService>().InstancePerDependency().PropertiesAutowired();
 
-            builder.RegisterType<UserRepository>().InstancePerDependency();
-            builder.RegisterType<UserLoginRepository>().InstancePerDependency();
+            builder.Register<UserRepository>(x => new UserRepository(resolvePersistence(x))).InstancePerDependency();
+            builder.Register<UserLoginRepository>(x => new UserLoginRepository(resolvePersistence(x))).InstancePerDependency();
             builder.RegisterType<UserService>().As<IUserService>().InstancePerDependency().PropertiesAutowired();
 
-            builder.RegisterType<GroupRepository>().InstancePerDependency();
+            builder.Register<GroupRepository>(x => new GroupRepository(resolvePersistence(x))).InstancePerDependency();
             builder.RegisterType<GroupService>().As<IGroupService>().InstancePerDependency().PropertiesAutowired();
 
 

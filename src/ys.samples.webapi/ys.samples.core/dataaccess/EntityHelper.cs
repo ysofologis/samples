@@ -26,7 +26,7 @@ namespace ys.samples.dataaccess {
             }
         }
         public static EntityT makeUnique<EntityT>( this EntityT entity ) where EntityT : IPersistentEntity {
-            if ( string.IsNullOrEmpty(entity.Id) ) {
+            if ( string.IsNullOrEmpty(entity.id) ) {
                 var currentDate = DateTime.Now;
                 long elapsedTicks = currentDate.Ticks - centuryBegin.Ticks;
                 var uniqueId = string.Format("{0}{1}{2:X4}{3:X2}", entity.createAbbreviation(),
@@ -34,7 +34,7 @@ namespace ys.samples.dataaccess {
                                                                 processId, 
                                                                 Thread.CurrentThread.ManagedThreadId)
                                                                 .PadLeft(PersistentEntity.KEY_SIZE,'0');
-                entity.Id = uniqueId;
+                entity.id = uniqueId;
             }
             return entity;
         }

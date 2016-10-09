@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace ys.samples.config {
     public sealed class AuthSetting : ConfigurationSetting {
-        private AuthSetting(string name): base(name) {
+        private AuthSetting(string name, string defaultValue): base(name,defaultValue) {
 
         }
-        public static readonly AuthSetting SessionExpiration = new AuthSetting("auth:session-expiration");
+        public static readonly AuthSetting SessionExpiration = new AuthSetting("auth:session-expiration", "60");
     }
 }

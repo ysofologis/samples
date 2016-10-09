@@ -8,7 +8,11 @@ using System.Threading.Tasks;
 namespace ys.samples.config {
     internal class AppSettingConfigService : IConfigurationService {
         public string GetSetting( ConfigurationSetting setting ) {
-            return ConfigurationManager.AppSettings[setting.Key];
+            if ( ConfigurationManager.AppSettings[setting.Key] != null ) {
+                return ConfigurationManager.AppSettings[setting.Key];
+            } else {
+                return setting.defaultValue;
+            }
         }
     }
 }

@@ -32,7 +32,7 @@ namespace ys.samples.webapi {
             builder.RegisterWebApiFilterProvider(globalConfig);
 
             var config = new ConfigurationBuilder();
-            config.AddJsonFile("autofac.json");
+            config.AddJsonFile("conf/autofac.json");
             var module = new ConfigurationModule(config.Build());
 
             builder.RegisterModule(module);

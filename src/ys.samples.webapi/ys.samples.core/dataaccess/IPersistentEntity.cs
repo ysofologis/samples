@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ys.samples.dataaccess {
     public interface IPersistentEntity {
-        string Id {
+        string id {
             get;set;
         }
         DateTime? dateInserted {

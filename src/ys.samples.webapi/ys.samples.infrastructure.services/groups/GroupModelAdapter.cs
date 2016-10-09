@@ -11,13 +11,13 @@ namespace ys.samples.infrastructure.groups {
     internal class GroupModelAdapter : ModelAdapter<GroupModel, IGroupEntity> {
         public override IGroupEntity EntityFromModel( IEntityFactory<IGroupEntity> entitySet, GroupModel model ) {
             var entity = entitySet.Create();
-            entity.Id = model.Id;
+            entity.id = model.Id;
             entity.Name = model.Name;
             return entity;
         }
         public override GroupModel ModelFromEntity( IGroupEntity entity ) {
             return new GroupModel() {
-                Id = entity.Id,
+                Id = entity.id,
                 Name = entity.Name,
             };
         }

@@ -121,7 +121,7 @@ namespace ys.samples.infrastructure {
                 allUsers.Add(demoUser);
 
                 var userLogin = new UserLogin() {
-                    userId = demoUser.Id,
+                    userId = demoUser.id,
                     userPassword = userPwd,
                     dateInserted = DateTime.Now,
                     dateUpdated = DateTime.Now,
@@ -129,11 +129,11 @@ namespace ys.samples.infrastructure {
                 dbctx.Set<UserLogin>().Add(userLogin);
 
                 var userSession = new UserSession() {
-                    Id = "session-for-" + userName,
+                    id = "session-for-" + userName,
                     LoginDate = DateTime.Now,
                     LogoutDate = DateTime.MinValue,
                     LoginFailures = 0,
-                    userLoginId = userLogin.Id,
+                    userLoginId = userLogin.id,
                     dateInserted = DateTime.Now,
                     dateUpdated = DateTime.Now,
                 };
@@ -141,8 +141,8 @@ namespace ys.samples.infrastructure {
 
                 dbctx.SaveChanges();
             } else {
-                var userLogin = dbctx.Set<UserLogin>().Where(x => x.userId == demoUser.Id).FirstOrDefault();
-                var userSession = dbctx.Set<UserSession>().Where(x => x.userLoginId == userLogin.Id).FirstOrDefault();
+                var userLogin = dbctx.Set<UserLogin>().Where(x => x.userId == demoUser.id).FirstOrDefault();
+                var userSession = dbctx.Set<UserSession>().Where(x => x.userLoginId == userLogin.id).FirstOrDefault();
                 userSession.LoginDate = DateTime.Now;
                 dbctx.SaveChanges();
             }

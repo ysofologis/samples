@@ -23,7 +23,7 @@ namespace ys.samples.mocks {
             config.AddJsonFile("autofac.json");
             var module = new ConfigurationModule(config.Build());
             builder.RegisterModule(module);
-            builder.RegisterType<InMemoryPersistentContext>().As<IPersistenceContext>().InstancePerLifetimeScope();
+            builder.RegisterType<InMemoryPersistentContext>().Named<IPersistenceContext>("infra-db").InstancePerLifetimeScope();
 
             this.rootScope = builder.Build();
         }

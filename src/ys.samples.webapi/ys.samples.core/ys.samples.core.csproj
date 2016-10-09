@@ -104,6 +104,7 @@
     <Compile Include="config\AuthSetting.cs" />
     <Compile Include="config\ConfigurationSetting.cs" />
     <Compile Include="config\IConfigurationService.cs" />
+    <Compile Include="config\PersistenceSetting.cs" />
     <Compile Include="dataaccess\EFDataContext.cs" />
     <Compile Include="dataaccess\EntityRepository.cs" />
     <Compile Include="dataaccess\EFEntitySetWrapper.cs" />

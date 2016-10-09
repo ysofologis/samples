@@ -18,7 +18,7 @@ namespace ys.samples.shared {
                 public DateTime? dateUpdated {
                     get; set;
                 }
-                public string Id {
+                public string id {
                     get; set;
                 }
             }
@@ -133,7 +133,7 @@ namespace ys.samples.shared {
             }
 
             public EntityT Find( params object[] keyValues ) {
-                return this.Entities.Where(x => x.Id == keyValues[0].ToString()).FirstOrDefault();
+                return this.Entities.Where(x => x.id == keyValues[0].ToString()).FirstOrDefault();
             }
 
             public IEnumerator<EntityT> GetEnumerator( ) {

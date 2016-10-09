@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FluentNHibernate.Mapping;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -8,51 +9,53 @@ using System.Threading.Tasks;
 using ys.samples.dataaccess;
 
 namespace ys.samples.devunion.entities {
-    public interface ICompanyEntity : IPersistentEntity {
-        string Name {
+    public interface ICompanyEntity : ITrackedEntity {
+        string name {
             get;
             set;
         }
-        string Sobriquet {
+        string sobriquet {
             get;
             set;
         }
-        string Address {
+        string address {
             get;
             set;
         }
-        string UpdatedByMemberId {
+        IList<ICompanyTeamEntity> Teams {
             get;
-            set;
         }
     }
-    [DomainTable("companies")]
-    internal class Company : PersistentEntity, ICompanyEntity {
-        [Column("name")]
-        [StringLength(50)]
-        public string Name {
+    internal class Company : TrackedPersistentEntity, ICompanyEntity {
+        public virtual string name {
             get;
             set;
         }
-        [Column("sobriquet")]
-        [StringLength(50)]
-        public string Sobriquet {
+        public virtual string sobriquet {
             get;
             set;
         }
-        [Column("address")]
-        [StringLength(50)]
-        public string Address {
+        public virtual string address {
             get;
             set;
         }
-        [Column("update_by")]
-        [ReferenceKey]
-        public string UpdatedByMemberId {
-            get;set;
+        public virtual IList<CompanyTeam> Teams {
+            get;
+            set;
         }
-        public virtual Member UpdatedByMember {
-            get; set;
+        IList<ICompanyTeamEntity> ICompanyEntity.Teams {
+            get {
+                return ( IList<ICompanyTeamEntity> ) this.Teams;
+            }
+        }
+    }
+    internal class CompanyMap : EntityMap<Company> {
+        public CompanyMap( ) {
+            Map(x => x.address, "company_address").Nullable();
+            Map(x => x.name, "company_name");
+            Map(x => x.sobriquet, "company_sobriquet");
+            HasMany<CompanyTeam>(x => x.Teams).KeyColumn("company_id").Inverse().Cascade.All();
+            
         }
     }
 }

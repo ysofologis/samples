@@ -31,25 +31,25 @@ namespace ys.samples.shared {
                 users.Add(user);
             }
             var userLogins = perctx.GetEntitySet<IUserLoginEntity>();
-            var login = userLogins.Where(x => x.userId == user.Id).FirstOrDefault();
+            var login = userLogins.Where(x => x.userId == user.id).FirstOrDefault();
             if ( login == null ) {
                 login = userLogins.Create();
-                login.userId = user.Id;
+                login.userId = user.id;
                 login.userPassword = password;
                 login.makeUnique();
                 userLogins.Add(login);
             }
             var userSessions = perctx.GetEntitySet<IUserSessionEntity>();
-            var loginSession = userSessions.Where(x => x.userLoginId == login.Id).FirstOrDefault();
+            var loginSession = userSessions.Where(x => x.userLoginId == login.id).FirstOrDefault();
             if ( loginSession == null ) {
                 loginSession = userSessions.Create();
-                loginSession.userLoginId = login.Id;
+                loginSession.userLoginId = login.id;
                 loginSession.LoginDate = DateTime.Now;
                 loginSession.makeUnique();
                 userSessions.Add(loginSession);
             }
             var reqctx = new DomainServiceRequestContextForTests();
-            reqctx.headers["session-id"] = loginSession.Id;
+            reqctx.headers["session-id"] = loginSession.id;
             return reqctx;
         }
     }
