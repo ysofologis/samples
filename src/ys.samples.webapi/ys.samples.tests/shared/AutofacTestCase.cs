@@ -8,20 +8,26 @@ using Xunit;
 using ys.samples.dataaccess;
 using ys.samples.infrastructure;
 using ys.samples.infrastructure.entities;
+using ys.samples.infrastructure.persistance;
 using ys.samples.services;
 
 namespace ys.samples.shared {
-    public abstract class AutofacTestCase<MockSetupT> : IClassFixture<MockSetupT>
+    public abstract class AutofacTestCase<MockSetupT> : IClassFixture<MockSetupT>, IDisposable
         where MockSetupT: class, IMockSetup {
-        public MockSetupT setup {
+        public MockSetupT fixture {
             get;
             private set;
         }
-        public AutofacTestCase( MockSetupT setup ) {
-            this.setup = setup;
+        public AutofacTestCase( MockSetupT fixture ) {
+            this.fixture = fixture;
+            setup();
+        }
+        protected virtual void setup( ) {
+        }
+        protected virtual void tearDown( ) {
         }
         protected IDomainServiceRequestContext setUserSession( ILifetimeScope currentScope, string username, string password ) {
-            var perctx = currentScope.Resolve<IPersistenceContext>();
+            var perctx = currentScope.Resolve<InfraPersistenceContext>();
             var users = perctx.GetEntitySet<IUserEntity>();
             var user = users.Where(x => x.Name == username).FirstOrDefault();
             if ( user == null ) {
@@ -51,6 +57,10 @@ namespace ys.samples.shared {
             var reqctx = new DomainServiceRequestContextForTests();
             reqctx.headers["session-id"] = loginSession.id;
             return reqctx;
+        }
+
+        public void Dispose( ) {
+            this.tearDown();
         }
     }
 }

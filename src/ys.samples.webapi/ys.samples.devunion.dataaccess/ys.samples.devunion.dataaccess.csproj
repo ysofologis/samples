@@ -79,6 +79,8 @@
     <Compile Include="entities\ProfessionalHistory.cs" />
     <Compile Include="entities\CompanyTeamAffair.cs" />
     <Compile Include="Module.cs" />
+    <Compile Include="ModuleSetup.cs" />
+    <Compile Include="persistence\ConnectionStringTracker.cs" />
     <Compile Include="persistence\DataContext.cs" />
     <Compile Include="persistence\EntityMapper.cs" />
     <Compile Include="persistence\PersistenceSetup.cs" />

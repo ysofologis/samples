@@ -48,11 +48,11 @@ namespace ys.samples.devunion.entities {
     }
     internal class CompanyTeamAffairMap : EntityMap<CompanyTeamAffair> {
         public CompanyTeamAffairMap( ) {
-            Map(x => x.teamId, "team_id");
+            Table("devunion_team_affairs");
             Map(x => x.whatHappened, "what_happened");
             Map(x => x.occurredFrom, "occurred_from");
             Map(x => x.occurredTo, "occurred_to");
-            References<CompanyTeam>(x => x.team).Column("team_id");
+            References<CompanyTeam>(x => x.team).Column("team_id").Cascade.All();
         }
     }
 }

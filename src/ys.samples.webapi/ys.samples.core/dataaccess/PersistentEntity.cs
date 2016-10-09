@@ -14,14 +14,14 @@ namespace ys.samples.dataaccess {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [StringLength(KEY_SIZE)]
-        public string id {
+        public virtual string id {
             get;
             set;
         }
-        public DateTime? dateInserted {
+        public virtual DateTime? dateInserted {
             get;set;
         }
-        public DateTime? dateUpdated {
+        public virtual DateTime? dateUpdated {
             get; set;
         }
     }

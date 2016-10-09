@@ -9,11 +9,12 @@ using ys.samples.ioc;
 using ys.samples.infrastructure.groups;
 using ys.samples.infrastructure.auth;
 using ys.samples.dataaccess;
+using ys.samples.infrastructure.persistance;
 
 namespace ys.samples.infrastructure {
     public class Module : Autofac.Module {
         private IPersistenceContext resolvePersistence( IComponentContext ctx ) {
-            return ctx.ResolveNamed<IPersistenceContext>("infra-db");
+            return ctx.Resolve<InfraPersistenceContext>();
         }
         protected override void Load( ContainerBuilder builder ) {
             base.Load(builder);

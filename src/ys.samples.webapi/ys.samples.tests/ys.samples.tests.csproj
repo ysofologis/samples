@@ -101,6 +101,10 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.SqlServer.Compact.4.0.8876.1\lib\net40\System.Data.SqlServerCe.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
       <Private>True</Private>
@@ -137,7 +141,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="dataaccess\DevUnionCRUD.cs" />
+    <Compile Include="dataaccess\DevUnionSchema.cs" />
+    <Compile Include="dataaccess\LocalSQLCeMock.cs" />
     <Compile Include="generators\DevunionSchema.cs" />
+    <Compile Include="mocks\AutofacMockBase.cs" />
     <Compile Include="NullModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="services\AuthenticationTests.cs" />
@@ -149,19 +157,23 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="controllers\" />
-    <Folder Include="dataaccess\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <Content Include="autofac.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="data\ys.samples.devunion.sdf" />
+    <Content Include="data\ys.samples.devunion.sdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="data\ys.samples.devunion.sqlite3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="data\ys.samples.infra.sqlite3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="autofac.devunion.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="packages.config" />
   </ItemGroup>
@@ -169,6 +181,10 @@
     <ProjectReference Include="..\ys.samples.core\ys.samples.core.csproj">
       <Project>{9b6810d5-db64-4b3d-838d-a308540e48db}</Project>
       <Name>ys.samples.core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ys.samples.devunion.dataaccess\ys.samples.devunion.dataaccess.csproj">
+      <Project>{92b9ee05-8c2d-4e2d-b741-66ca4d55209d}</Project>
+      <Name>ys.samples.devunion.dataaccess</Name>
     </ProjectReference>
     <ProjectReference Include="..\ys.samples.infrastructure.dataaccess\ys.samples.infrastructure.dataaccess.csproj">
       <Project>{c5af6553-9610-48cd-9571-dd23757e93ab}</Project>
@@ -189,6 +205,13 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\xunit.runner.visualstudio.2.1.0\build\net20\xunit.runner.visualstudio.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\xunit.runner.visualstudio.2.1.0\build\net20\xunit.runner.visualstudio.props'))" />
   </Target>
+  <PropertyGroup>
+    <PostBuildEvent>
+    if not exist "$(TargetDir)x86" md "$(TargetDir)x86"
+    xcopy /s /y "$(SolutionDir)packages\Microsoft.SqlServer.Compact.4.0.8876.1\NativeBinaries\x86\*.*" "$(TargetDir)x86"
+    if not exist "$(TargetDir)amd64" md "$(TargetDir)amd64"
+    xcopy /s /y "$(SolutionDir)packages\Microsoft.SqlServer.Compact.4.0.8876.1\NativeBinaries\amd64\*.*" "$(TargetDir)amd64"</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

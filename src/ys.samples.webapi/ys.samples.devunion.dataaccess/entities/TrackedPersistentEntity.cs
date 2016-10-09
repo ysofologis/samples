@@ -61,13 +61,13 @@ namespace ys.samples.devunion.entities {
             get;
             set;
         }
-        public void markAsDiscarded( string memberId, ITrackedEntity prevRevision ) {
+        public virtual void markAsDiscarded( string memberId, ITrackedEntity prevRevision ) {
             this.updatedById = memberId;
             this.historyRevision = prevRevision != null ? prevRevision.historyRevision + 1 : 1;
             this.historyHead = prevRevision != null ? prevRevision.historyHead : this.id;
         }
 
-        public void markAsDeleted( string memberId ) {
+        public virtual void markAsDeleted( string memberId ) {
             this.isDeleted = true;
             this.updatedById = memberId;
         }
@@ -88,8 +88,7 @@ namespace ys.samples.devunion.entities {
             Map(x => x.historyHead, "history_head").Nullable();
             Map(x => x.historyRevision, "history_rev").Default("0");
             Map(x => x.isDeleted, "is_deleted").Default("0");
-            Map(x => x.updatedById, "updated_by");
-            References<Member>(x => x.updatedBy).Column("updated_by");
+            References<Member>(x => x.updatedBy).Column("updated_by").Nullable().Cascade.All();
         }
     }
 

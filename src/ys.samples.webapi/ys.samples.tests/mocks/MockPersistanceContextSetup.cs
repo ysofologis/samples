@@ -8,40 +8,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ys.samples.dataaccess;
+using ys.samples.infrastructure.persistance;
 using ys.samples.shared;
 
 namespace ys.samples.mocks {
-    public class MockPersistanceContextSetup : IMockSetup {
+    public class MockPersistanceContextSetup : AutofacMockBase {
         private ILifetimeScope rootScope {
             get;
             set;
         }
-        public MockPersistanceContextSetup( ) {
-            var builder = new Autofac.ContainerBuilder();
-            
-            var config = new ConfigurationBuilder();
-            config.AddJsonFile("autofac.json");
-            var module = new ConfigurationModule(config.Build());
-            builder.RegisterModule(module);
-            builder.RegisterType<InMemoryPersistentContext>().Named<IPersistenceContext>("infra-db").InstancePerLifetimeScope();
-
-            this.rootScope = builder.Build();
+        public MockPersistanceContextSetup( ) : base("autofac.json") {
         }
-        public ClassT Resolve<ClassT>( ) {
-            try {
-                return this.rootScope.Resolve<ClassT>();
-            } catch(Exception x) {
-                Trace.WriteLine(x);
-                throw;
-            }
-        }
-
-        public ILifetimeScope beginMethodScope( ) {
-            var scope = this.rootScope.BeginLifetimeScope();
-            return scope;
-        }
-        public void Dispose( ) {
-            this.rootScope.Dispose();    
+        protected override void registerComponents( ContainerBuilder builder ) {
+            builder.RegisterType<InMemoryPersistentContext>().As<InfraPersistenceContext>().InstancePerLifetimeScope();
         }
     }
 }

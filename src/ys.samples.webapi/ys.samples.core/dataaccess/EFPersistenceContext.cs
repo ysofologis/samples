@@ -81,5 +81,10 @@ namespace ys.samples.dataaccess {
         public object GetUnderlyingSession( ) {
             return _EFContext;
         }
+        public abstract string generateSQLSchema( );
+
+        public void Save( ) {
+            _EFContext.SaveChanges();
+        }
     }
 }

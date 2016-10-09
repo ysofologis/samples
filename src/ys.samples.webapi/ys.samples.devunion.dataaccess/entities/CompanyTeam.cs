@@ -46,10 +46,10 @@ namespace ys.samples.devunion.entities {
     }
     internal class CompanyTeamMap : EntityMap<CompanyTeam> {
         public CompanyTeamMap( ) {
-            Map(x => x.companyId, "company_id");
+            Table("devunion_company_teams");
             Map(x => x.name, "team_name");
             Map(x => x.sobriquet, "team_sobriquet");
-            References<Company>(x => x.company).Column("company_id");
+            References<Company>(x => x.company).Column("company_id").Cascade.All();
             HasMany<CompanyTeamAffair>(x => x.teamAffairs).KeyColumn("team_id").Inverse().Cascade.All();
         }
     }

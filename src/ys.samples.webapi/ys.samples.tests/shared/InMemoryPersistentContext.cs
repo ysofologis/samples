@@ -7,9 +7,10 @@ using System.Text;
 using System.Threading.Tasks;
 using ys.samples.dataaccess;
 using ys.samples.infrastructure.entities;
+using ys.samples.infrastructure.persistance;
 
 namespace ys.samples.shared {
-    class InMemoryPersistentContext : IPersistenceContext {
+    class InMemoryPersistentContext : InfraPersistenceContext {
         private static class Workspace {
             public abstract class EntityBase : IPersistentEntity {
                 public DateTime? dateInserted {
@@ -172,6 +173,13 @@ namespace ys.samples.shared {
                 _entitySets[typeof(EntityT)] = new List<EntityT>();
             }
             return new EntitySetWrapper<EntityT>() { Entities = (List<EntityT>) _entitySets[typeof(EntityT)] };
+        }
+
+        public string generateSQLSchema( ) {
+            throw new NotImplementedException();
+        }
+
+        public void Save( ) {
         }
     }
 }

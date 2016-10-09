@@ -267,3 +267,7 @@ __pycache__/
 # Cake - Uncomment if you are using it
 # tools/
 /src/ys.samples.webapi/ys.samples.webapi/WebClients/devcafe/nbproject/private/
+/src/ys.samples.webapi/ys.samples.webapi/_bin_deployableAssemblies/amd64
+/tests/ys.samples/amd64
+/tests/ys.samples/System.Data.SqlServerCe.dll
+/tests/ys.samples/ys.samples.devunion.dataaccess.dll

@@ -14,12 +14,12 @@ using ys.samples.shared;
 namespace ys.samples.services {
     [Trait("Services","Authentication")]
     public class AuthenticationTests : AutofacTestCase<MockPersistanceContextSetup> {
-        public AuthenticationTests( MockPersistanceContextSetup setup ) : base(setup) {
+        public AuthenticationTests( MockPersistanceContextSetup fixture ) : base(fixture) {
         }
 
         [Fact(DisplayName ="Should Return No Groups")]
         public void it_should_return_no_groups( ) {
-            using ( var scope = this.setup.beginMethodScope() ) {
+            using ( var scope = this.fixture.beginMethodScope() ) {
                 var reqctx = setUserSession(scope, "user01", "111111");
                 var service = scope.Resolve<IGroupService>();
                 var groups = service.GetAll(reqctx, new Paging());
@@ -28,7 +28,7 @@ namespace ys.samples.services {
         }
         [Fact(DisplayName = "Should Return Default Groups")]
         public void it_should_return_default_groups( ) {
-            using ( var scope = this.setup.beginMethodScope() ) {
+            using ( var scope = this.fixture.beginMethodScope() ) {
                 var reqctx = setUserSession(scope, "user01", "111111");
                 var service = scope.Resolve<IGroupService>();
                 var groupList = new List<GroupModel>();
@@ -49,7 +49,7 @@ namespace ys.samples.services {
         }
         [Fact(DisplayName = "Should Return The Session User")]
         public void it_should_return_no_users( ) {
-            using ( var scope = this.setup.beginMethodScope() ) {
+            using ( var scope = this.fixture.beginMethodScope() ) {
                 var reqctx = setUserSession(scope, "user01", "111111");
                 var service = scope.Resolve<IUserService>();
                 var users = service.GetAll(reqctx, new Paging());
@@ -58,7 +58,7 @@ namespace ys.samples.services {
         }
         [Fact(DisplayName = "Should Return Default Users")]
         public void it_should_return_default_users( ) {
-            using ( var scope = this.setup.beginMethodScope() ) {
+            using ( var scope = this.fixture.beginMethodScope() ) {
                 var reqctx = setUserSession(scope, "user01", "111111");
                 var service = scope.Resolve<IUserService>();
                 var groupList = new List<UserModel>();

@@ -6,9 +6,14 @@ using System.Threading.Tasks;
 using ys.samples.dataaccess;
 
 namespace ys.samples.infrastructure.persistance {
-    public sealed class InfraPersistenceContext : EFPersistenceContext {
-        internal InfraPersistenceContext( InfraDBContext dbContext) : base(dbContext) {
+    public interface InfraPersistenceContext : IPersistenceContext {
+    }
+    internal sealed class InternalPersistenceContext : EFPersistenceContext, InfraPersistenceContext {
+        internal InternalPersistenceContext( InfraDBContext dbContext) : base(dbContext) {
 
+        }
+        public override string generateSQLSchema( ) {
+            throw new NotImplementedException();
         }
     }
 }

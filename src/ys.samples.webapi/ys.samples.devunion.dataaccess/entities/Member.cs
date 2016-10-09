@@ -38,6 +38,7 @@ namespace ys.samples.devunion.entities {
     }
     internal class MemberMap : ClassMap<Member> {
         public MemberMap( ) {
+            Table("devunion_members");
             Id(x => x.id).GeneratedBy.Custom<LocalIdGenerator>();
             Map(x => x.dateInserted, "date_inserted").Nullable();
             Map(x => x.dateUpdated, "date_updated").Nullable();

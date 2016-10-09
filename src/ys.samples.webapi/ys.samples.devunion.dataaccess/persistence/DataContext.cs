@@ -11,7 +11,9 @@ using ys.samples.dataaccess;
 using ys.samples.devunion.entities;
 
 namespace ys.samples.devunion.persistence {
-    internal class DataContext : dataaccess.IPersistenceContext {
+    public interface DevunionPersistenceContext : IPersistenceContext {
+    }
+    internal class DataContext : DevunionPersistenceContext {
         private class UnitOfWork : IUnitOfWork {
             public ISession nhibSession {
                 get; private set;
@@ -35,6 +37,7 @@ namespace ys.samples.devunion.persistence {
 
             public void Save( ) {
                 if ( !this.isDisposed ) {
+                    this.nhibSession.Flush();
                     this.workTransaction.Commit();
                     this.isSaved = true;
                     this.workTransaction.Dispose();
@@ -83,7 +86,8 @@ namespace ys.samples.devunion.persistence {
             }
 
             public EntityT Add( EntityT entity ) {
-                return (EntityT) this.nhibSession.Save(entity);
+                this.nhibSession.SaveOrUpdate(entity);
+                return entity;
             }
 
             public IEnumerable<EntityT> AddRange( IEnumerable<EntityT> entities ) {
@@ -109,27 +113,27 @@ namespace ys.samples.devunion.persistence {
             }
 
             public IEnumerator<EntityT> GetEnumerator( ) {
-                throw new NotImplementedException();
+                return this.nhibSession.Query<EntityT>().GetEnumerator();
             }
 
             public EntityT Remove( EntityT entity ) {
-                throw new NotImplementedException();
+                this.nhibSession.Delete(entity);
+                return entity;
             }
 
             public void SetModified( EntityT entity ) {
-                throw new NotImplementedException();
+                this.nhibSession.Merge(entity);
             }
 
             IEnumerator IEnumerable.GetEnumerator( ) {
-                throw new NotImplementedException();
+                return this.nhibSession.Query<EntityT>().GetEnumerator();
             }
         }
         ISession _session;
+        string _SQLschema;
         public DataContext( PersistenceSetup setup) {
-            setup.runSetup( nhibConfig => {
-            });
-            _session = setup.buildSessionFactory().OpenSession();
-
+            _session = setup.sessionFactory.OpenSession();
+            _SQLschema = setup.SQLSchema;
         }
         public void Dispose( ) {
             _session.Dispose();
@@ -147,6 +151,14 @@ namespace ys.samples.devunion.persistence {
             return new EntitySet<EntityT>() {
                 nhibSession = _session,
             };
+        }
+
+        public string generateSQLSchema( ) {
+            return _SQLschema;
+        }
+
+        public void Save( ) {
+            _session.Flush();
         }
     }
 }

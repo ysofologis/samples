@@ -57,10 +57,9 @@ namespace ys.samples.devunion.entities {
     }
     internal class ProfessionalHistoryMap : EntityMap<ProfessionalHistory> {
         public ProfessionalHistoryMap( ) {
-            Map(x => x.teamId, "team_id");
-            References<CompanyTeam>(x => x.team).Column("team_id");
-            Map(x => x.employeeId, "employee_id");
-            References<Member>(x => x.employee).Column("employee_id");
+            Table("devunion_member_resume");
+            References<CompanyTeam>(x => x.team).Column("team_id").Cascade.All();
+            References<Member>(x => x.employee).Column("employee_id").Cascade.All();
             Map(x => x.teamRoles, "team_roles").Nullable();
             Map(x => x.employedFrom, "employed_from");
             Map(x => x.employedTo, "employed_to");

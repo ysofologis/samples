@@ -22,7 +22,7 @@ namespace ys.samples.devunion.entities {
             get;
             set;
         }
-        IList<ICompanyTeamEntity> Teams {
+        IList<ICompanyTeamEntity> teams {
             get;
         }
     }
@@ -39,22 +39,23 @@ namespace ys.samples.devunion.entities {
             get;
             set;
         }
-        public virtual IList<CompanyTeam> Teams {
+        public virtual IList<CompanyTeam> teams {
             get;
             set;
         }
-        IList<ICompanyTeamEntity> ICompanyEntity.Teams {
+        IList<ICompanyTeamEntity> ICompanyEntity.teams {
             get {
-                return ( IList<ICompanyTeamEntity> ) this.Teams;
+                return ( IList<ICompanyTeamEntity> ) this.teams;
             }
         }
     }
     internal class CompanyMap : EntityMap<Company> {
         public CompanyMap( ) {
+            Table("devunion_companies");
             Map(x => x.address, "company_address").Nullable();
             Map(x => x.name, "company_name");
             Map(x => x.sobriquet, "company_sobriquet");
-            HasMany<CompanyTeam>(x => x.Teams).KeyColumn("company_id").Inverse().Cascade.All();
+            HasMany<CompanyTeam>(x => x.teams).KeyColumn("company_id").Inverse().Cascade.All();
             
         }
     }

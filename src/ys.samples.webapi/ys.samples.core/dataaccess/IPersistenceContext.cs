@@ -10,5 +10,7 @@ namespace ys.samples.dataaccess {
         IUnitOfWork StartWork( bool joinExistingWork );
         object GetUnderlyingSession( );
         IEntitySet<EntityT> GetEntitySet<EntityT>( ) where EntityT : class, IPersistentEntity;
+        string generateSQLSchema( );
+        void Save( );
     }
 }
