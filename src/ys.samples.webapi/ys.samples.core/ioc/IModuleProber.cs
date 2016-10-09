@@ -4,9 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ys.samples.devunion.web
-{
-    public class Class1
-    {
+namespace ys.samples.ioc {
+    public interface IModuleProber {
+        Autofac.Module GetModule( );
     }
 }

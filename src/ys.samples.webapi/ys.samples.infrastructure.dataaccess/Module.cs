@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,4 +18,18 @@ namespace ys.samples.infrastructure {
             builder.RegisterType<ModuleSetup>().As<IModuleSetup>().SingleInstance();
         }
     }
+    [Export(typeof(IModuleProber))]
+    public class ModuleProber : IModuleProber {
+        public Autofac.Module Module {
+            get;
+            private set;
+        }
+        public ModuleProber( ) {
+            this.Module = new Module();
+        }
+        public Autofac.Module GetModule( ) {
+            return this.Module;
+        }
+    }
+
 }

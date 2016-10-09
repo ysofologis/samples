@@ -155,12 +155,10 @@ namespace ys.samples.dataaccess {
         IPersistentEntity IEntityRepository.Insert( IPersistentEntity entity ) {
             return this.Insert( (EntityT) entity);
         }
-
         IEnumerable<IPersistentEntity> IEntityRepository.InsertMany( IEnumerable<IPersistentEntity> entities ) {
             return this.InsertMany(entities.Cast<EntityT>());
         }
-
-        IQueryable<IPersistentEntity> IEntityRepository.Search( Func<IPersistentEntity, bool> predicate ) {
+       IQueryable<IPersistentEntity> IEntityRepository.Search( Func<IPersistentEntity, bool> predicate ) {
             Func<EntityT, bool> p = ( x ) => {
                 return predicate(x);
             };

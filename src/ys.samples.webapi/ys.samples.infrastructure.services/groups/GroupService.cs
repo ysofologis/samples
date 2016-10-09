@@ -8,7 +8,7 @@ using ys.samples.infrastructure.entities;
 using ys.samples.services;
 
 namespace ys.samples.infrastructure.groups {
-    internal class GroupService : EFDomainService<GroupModel, IGroupEntity, GroupModelAdapter>, IGroupService {
+    internal class GroupService : DomainServiceSkeleton<GroupModel, IGroupEntity, GroupModelAdapter>, IGroupService {
         public GroupService( GroupRepository repo) : base(repo) {
 
         }

@@ -38,8 +38,22 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Deploy|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\ys.samples.webapi\Lib\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=4.1.1.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.4.1.1\lib\net45\Autofac.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -49,17 +63,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="companies\CompanyAdapter.cs" />
+    <Compile Include="companies\CompanyRepository.cs" />
+    <Compile Include="companies\CompanyService.cs" />
+    <Compile Include="Exports.cs" />
     <Compile Include="ICompanyService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TrackedModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ys.samples.core\ys.samples.core.csproj">
       <Project>{9b6810d5-db64-4b3d-838d-a308540e48db}</Project>
       <Name>ys.samples.core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ys.samples.devunion.dataaccess\ys.samples.devunion.dataaccess.csproj">
+      <Project>{92b9ee05-8c2d-4e2d-b741-66ca4d55209d}</Project>
+      <Name>ys.samples.devunion.dataaccess</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="companies\" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

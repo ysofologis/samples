@@ -6,20 +6,22 @@ using System.Threading.Tasks;
 using ys.samples.services;
 
 namespace ys.samples.devunion {
-    public class CompanyModel : TrackedModel {
-        public string name {
+    public abstract class TrackedModel : IDomainModel {
+        public string id {
             get;
             set;
         }
-        public string sobriquet {
+        public DateTime? dateInserted {
             get;
             set;
         }
-        public string address {
+        public DateTime? dateUpdated {
             get;
             set;
         }
-    }
-    public interface ICompanyService : IDomainService<CompanyModel> {
+        public string updatedBy {
+            get;
+            set;
+        }
     }
 }

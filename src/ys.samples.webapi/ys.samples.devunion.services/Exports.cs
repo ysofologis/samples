@@ -4,15 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Autofac;
-using Autofac.Integration.WebApi;
+using ys.samples.devunion.companies;
 using ys.samples.ioc;
 using System.ComponentModel.Composition;
 
-namespace ys.samples.infrastructure {
-    internal class Module : Autofac.Module {
+namespace ys.samples.devunion {
+    public class Exports : Autofac.Module{
         protected override void Load( ContainerBuilder builder ) {
             base.Load(builder);
-            builder.RegisterApiControllers(ThisAssembly).PropertiesAutowired();
+            builder.RegisterType<CompanyRepository>().InstancePerDependency();
+            builder.RegisterType<CompanyService>().As<ICompanyService>().InstancePerDependency().PropertiesAutowired();
         }
     }
     [Export(typeof(IModuleProber))]
@@ -22,7 +23,7 @@ namespace ys.samples.infrastructure {
             private set;
         }
         public ModuleProber( ) {
-            this.Module = new ys.samples.Module();
+            this.Module = new Module();
         }
         public Autofac.Module GetModule( ) {
             return this.Module;

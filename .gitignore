@@ -271,3 +271,6 @@ __pycache__/
 /tests/ys.samples/amd64
 /tests/ys.samples/System.Data.SqlServerCe.dll
 /tests/ys.samples/ys.samples.devunion.dataaccess.dll
+/src/ys.samples.webapi/ys.samples.webapi/Lib/amd64
+/src/ys.samples.webapi/ys.samples.webapi/Lib
+/tests/ys.samples

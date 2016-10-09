@@ -7,7 +7,7 @@ using ys.samples.services;
 
 namespace ys.samples.infrastructure.groups {
     public class GroupModel : IDomainModel {
-        public string Id {
+        public string id {
             get;set;
         }
 

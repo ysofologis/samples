@@ -19,7 +19,7 @@ namespace ys.samples.infrastructure {
 
         public void setupModule( IContainer iocResolver ) {
 
-            using ( var perctx = iocResolver.Resolve<IPersistenceContext>() ) {
+            using ( var perctx = iocResolver.Resolve<InfraPersistenceContext>() ) {
                 var test = perctx.GetEntitySet<IUserEntity>();
                 var dbctx = perctx.GetUnderlyingSession() as InfraDBContext;
                 if ( dbctx.isSQLite ) {

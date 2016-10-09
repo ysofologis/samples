@@ -8,7 +8,7 @@ using ys.samples.infrastructure.entities;
 using ys.samples.services;
 
 namespace ys.samples.infrastructure.users {
-    internal class UserService : EFDomainService<UserModel,IUserEntity,UserModelAdapter>, IUserService {
+    internal class UserService : DomainServiceSkeleton<UserModel,IUserEntity,UserModelAdapter>, IUserService {
         SessionRepository _sessionRepo;
         UserLoginRepository _loginRepo;
         public UserService( UserRepository entityRepo, 

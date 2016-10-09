@@ -4,7 +4,7 @@
       "type": "ys.samples.Module, ys.samples.core"
     },
     {
-      "type": "ys.samples.devunion.Module, ys.samples.devunion.dataaccess"
+      "type": "ys.samples.devunion.Exports, ys.samples.devunion.dataaccess"
     },
     {
       "type": "ys.samples.tests.NullModule, ys.samples.tests"

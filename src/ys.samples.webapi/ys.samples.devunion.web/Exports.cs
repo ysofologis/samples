@@ -8,8 +8,8 @@ using Autofac.Integration.WebApi;
 using ys.samples.ioc;
 using System.ComponentModel.Composition;
 
-namespace ys.samples.infrastructure {
-    internal class Module : Autofac.Module {
+namespace ys.samples.devunion {
+    public class Exports1 : Autofac.Module {
         protected override void Load( ContainerBuilder builder ) {
             base.Load(builder);
             builder.RegisterApiControllers(ThisAssembly).PropertiesAutowired();
@@ -22,7 +22,7 @@ namespace ys.samples.infrastructure {
             private set;
         }
         public ModuleProber( ) {
-            this.Module = new ys.samples.Module();
+            this.Module = new Exports1();
         }
         public Autofac.Module GetModule( ) {
             return this.Module;

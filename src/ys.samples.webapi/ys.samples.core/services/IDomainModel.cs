@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ys.samples.services {
     public interface IDomainModel {
-        string Id {
+        string id {
             get;
         }
     }

@@ -7,9 +7,10 @@ using Autofac;
 using ys.samples.devunion.persistence;
 using NHibernate.Engine;
 using ys.samples.ioc;
+using System.ComponentModel.Composition;
 
 namespace ys.samples.devunion {
-    public class Module : Autofac.Module {
+    public class Exports : Autofac.Module {
         protected override void Load( ContainerBuilder builder ) {
             base.Load(builder);
             builder.RegisterType<PersistenceSetup>().SingleInstance();
@@ -18,6 +19,19 @@ namespace ys.samples.devunion {
 
             builder.RegisterType<ModuleSetup>().As<IModuleSetup>().SingleInstance();
 
+        }
+    }
+    [Export(typeof(IModuleProber))]
+    public class ModuleProber : IModuleProber {
+        public Autofac.Module Module {
+            get;
+            private set;
+        }
+        public ModuleProber( ) {
+            this.Module = new Exports(); ;
+        }
+        public Autofac.Module GetModule( ) {
+            return this.Module;
         }
     }
 }

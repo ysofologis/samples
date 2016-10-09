@@ -11,7 +11,7 @@ namespace ys.samples.infrastructure.auth {
     class SessionModelAdapter : ModelAdapter<SessionModel, IUserSessionEntity> {
         public override IUserSessionEntity EntityFromModel( IEntityFactory<IUserSessionEntity> entitySet, SessionModel model ) {
             var entity = entitySet.Create();
-            entity.id = model.Id;
+            entity.id = model.id;
             entity.LoginDate = model.loginDate;
             entity.LoginFailures = model.loginFailures;
             entity.LogoutDate = model.logoutDate;
@@ -21,7 +21,7 @@ namespace ys.samples.infrastructure.auth {
 
         public override SessionModel ModelFromEntity( IUserSessionEntity entity ) {
             return new SessionModel() {
-                Id = entity.id,
+                id = entity.id,
                 loginDate = entity.LoginDate,
                 logoutDate = entity.LogoutDate,
                 loginFailures = entity.LoginFailures,

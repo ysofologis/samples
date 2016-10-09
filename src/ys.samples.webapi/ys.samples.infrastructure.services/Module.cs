@@ -10,6 +10,7 @@ using ys.samples.infrastructure.groups;
 using ys.samples.infrastructure.auth;
 using ys.samples.dataaccess;
 using ys.samples.infrastructure.persistance;
+using System.ComponentModel.Composition;
 
 namespace ys.samples.infrastructure {
     public class Module : Autofac.Module {
@@ -34,4 +35,18 @@ namespace ys.samples.infrastructure {
             builder.RegisterType<ModuleSetup>().As<IModuleSetup>().SingleInstance();
         }
     }
+    [Export(typeof(IModuleProber))]
+    public class ModuleProber : IModuleProber {
+        public Autofac.Module Module {
+            get;
+            private set;
+        }
+        public ModuleProber( ) {
+            this.Module = new Module();
+        }
+        public Autofac.Module GetModule( ) {
+            return this.Module;
+        }
+    }
+
 }

@@ -12,10 +12,8 @@ namespace ys.samples.devunion {
     internal class ModuleSetup : IModuleSetup {
         public void setupModule( IContainer iocResolver ) {
             using ( var perctx = iocResolver.Resolve<DevunionPersistenceContext>() ) {
-                using ( var work = perctx.StartWork(false) ) {
-                    addKnownCompanies(perctx);
-                    work.Save();
-                }
+                addKnownCompanies(perctx);
+                perctx.Save();
             }
         }
         private void addKnownCompanies( DevunionPersistenceContext perctx ) {
@@ -27,6 +25,27 @@ namespace ys.samples.devunion {
                     dateInserted = DateTime.Now,
                     dateUpdated = DateTime.Now,
                     address = "Odyssews 180"
+                });
+                companies.Add(new Company() {
+                    name = "codix",
+                    sobriquet = "sodix",
+                    dateInserted = DateTime.Now,
+                    dateUpdated = DateTime.Now,
+                    address = "Tolonos 180"
+                });
+                companies.Add(new Company() {
+                    name = "unixfor",
+                    sobriquet = "linuxfor",
+                    dateInserted = DateTime.Now,
+                    dateUpdated = DateTime.Now,
+                    address = "Agrioupolews 180"
+                });
+                companies.Add(new Company() {
+                    name = "relational",
+                    sobriquet = "irrelational",
+                    dateInserted = DateTime.Now,
+                    dateUpdated = DateTime.Now,
+                    address = "Kipokratous 180"
                 });
             }
         }

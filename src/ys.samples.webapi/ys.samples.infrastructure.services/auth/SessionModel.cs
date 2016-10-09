@@ -7,7 +7,7 @@ using ys.samples.services;
 
 namespace ys.samples.infrastructure.auth {
     public class SessionModel : IDomainModel {
-        public string Id {
+        public string id {
             get;set;
         }
         public string userLoginId {

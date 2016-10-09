@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using ys.samples.dataaccess;
 
 namespace ys.samples.services {
-    public abstract class EFDomainService<ModelT, EntityT, ModelAdapterT> : IDomainService, IDomainService<ModelT>
+    public abstract class DomainServiceSkeleton<ModelT, EntityT, ModelAdapterT> : IDomainService, IDomainService<ModelT>
         where ModelT : IDomainModel
         where EntityT : class, IPersistentEntity
         where ModelAdapterT : ModelAdapter<ModelT, EntityT>, new() {
@@ -14,7 +14,7 @@ namespace ys.samples.services {
         protected EntityRepository<EntityT> _entityRepo;
         private ModelAdapterT _adapter;
         private IAuthenticationService _authService;
-        public EFDomainService( EntityRepository<EntityT> entityRepo ) {
+        public DomainServiceSkeleton( EntityRepository<EntityT> entityRepo ) {
             _adapter = new ModelAdapterT();
             _entityRepo = entityRepo;
         }
